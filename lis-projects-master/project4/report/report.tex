@@ -1,0 +1,46 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[pdftex]{hyperref}
+
+% Lengths and indenting
+\setlength{\textwidth}{16.5cm}
+\setlength{\marginparwidth}{1.5cm}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{0.15cm}
+\setlength{\textheight}{22cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0cm}
+\setlength{\headsep}{0cm}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\title{Introduction to Learning and Intelligent Systems - Spring 2015}
+\author{jo@student.ethz.ch\\ stegeran@ethz.ch\\sakhadov@student.ethz.ch}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Project 4 : Classification with Missing Labels}
+
+Training data for this project contained very little labeled samples (80 out of about 40'000). Therefore a semi-supervised learning strategy had to be employed.
+
+It was not only required to find the most probably label, but to find the probabilities for samples belonging to the 8 different classes. We tried to use the seminb\footnote{http://www.mblondel.org/code/seminb.git} library, which implements the method from the paper "Semi-supervised Text Classification Using EM" \footnote{Semi-supervised Text Classification Using EM, Kamal Nigam, Andrew McCallum, Tom M. Mitchell }. In a first step the classifier is trained with the labeled data. Secondly the expectation step uses the current classifier to find the probability of the label of each unlabeled data point. In a third step the maximization is done, where the classifier is trained with all data including the new probabilistically-labeled one. The second and third step are then repeated until the accuracy is satisfying.
+Unfortunately we were not able to adapt this program library to our feature input.
+
+Generally, experimenting with mixed-gaussian models did not yield very good scores: we also tried the PyMix GMM Library. However we did not bring that to work and failed even at the data read-in stage. Sklearn does have a GMM classifier, but it does not have semi-supervised learning built in.
+
+We then decided to go an entirely different path: to use sklearns LabelPropagation and LabelSpreading implementations. This was not very successful at the beginning, as curiously most of the predicted Y values were NaN (Not a number). Further Investigation showed that after fitting, the sklearn.LabelSpreading internal state label\_distributions\_ had some values set to NaN, which then propagated to the Ypred values. We choose the solution to just set every NaN to 0 in the internal state. This gave us a score of about 4. Generally we could observe that LabelSpreading gave us much better results than LabelPropagation.
+
+The breakthrough came when we used the Sklearn LabelSpreader with a RBF (Radial basis function) kernel. This bumped our score to 0.71 immediately.
+
+It is to observe that LabelSpreading with RBF kernel requires quite a lot of memory and CPU power. It ran for about 10 minutes on a Macbook Pro with a 8 core Intel i7 @ 2.30GHz CPU and 16 GB memory. The algorithm was not runnable on a 8 GB RAM Windows machine.
+
+Another available option is the k-nearest neighbors function which runs faster and does not need as much memory. However for this project the result had a higher priority than the script runtime.
+
+RBF kernel takes gamma as a parameter which we fine-tuned using Sklearn cross-validation.
+
+\end{document}

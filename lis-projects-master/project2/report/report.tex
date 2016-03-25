@@ -1,0 +1,68 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[pdftex]{hyperref}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+
+% Lengths and indenting
+\setlength{\textwidth}{16.5cm}
+\setlength{\marginparwidth}{1.5cm}
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{0.15cm}
+\setlength{\textheight}{24cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{0cm}
+\setlength{\headsep}{0cm}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\title{Introduction to Learning and Intelligent Systems - Spring 2015}
+\author{jo@student.ethz.ch\\ sakhadov@student.ethz.ch\\  stegeran@student.ethz.ch\\}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Project 2 : Two-Label Classification}
+
+The Task given in the project was to solve a multi-label multi-class classification problem. The data provided to us was extracted from bio medical images with image processing techniques.
+
+We started using Support Vector Machine classifiers. Because of their slowness, we used only $<1$\% of the provided data in the beginning. This was enough to reach a score of 0.35. After tuning the parameters, we started to increase the size of our subset of the training set, but the result did not improve much given the much greater execution time.
+
+Therefore we had to try out other classification methods and finally concluded that the Random Forest Classifier delivered the best results. Moreover its runtime scales with $\mathcal{O}(nfeatures)$ which eliminated our initial concern about the run time.
+
+For further tuning of our solution, we used that one class is dependent of the other. So we used the Random Forest Classifier to predict one Class and the expanded the feature space by the resulting label. 
+%(zeile 34 - 53 in process.py, commit b27a895)
+
+With help of OneHotEncoder we also used binarization for the labels of the training data, which again increased our precision.
+
+Another score amendement was reached by weighting the classes and giving this information to the classifier (some labels appear more often than others).
+
+One of the biggest problems in machine learning is overfitting, which also showed in this project. Namely, we used cross validation and easily got a better result than the hard baseline. But when we validated the test set on the project website validation set), we did not even come close to the hard base line.
+
+Figure \ref{fig:hist} shows a histogram of what a label should be and what we predicted.
+
+%-------------------------------------------------- 
+\begin{figure}[h]
+ 
+\begin{subfigure}[l]{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=5cm]{pic/histy1.png} 
+\caption{First Class}
+\end{subfigure}
+\begin{subfigure}[r]{0.5\textwidth}
+\includegraphics[width=0.9\linewidth, height=5cm]{pic/histy2.png}
+\caption{Second Class}
+\end{subfigure}
+ 
+\caption{Histogram of real label and predicted label}
+\label{fig:hist}
+\end{figure}
+
+
+
+\end{document}

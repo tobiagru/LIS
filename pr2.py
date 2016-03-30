@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def load_Y(fname, asNpArray = True):
+def load_Y(fname, asNpArray = False):
      data = pd.read_csv(fname,
                        index_col=1,
                        dtype=np.float32,
@@ -13,7 +13,7 @@ def load_Y(fname, asNpArray = True):
      else:
          return data
 
-def load_X_train(fname,asNpArray = True):
+def load_X_train(fname,asNpArray = False):
     data = pd.read_csv(fname,
                        index_col=1,
                        dtype=np.float32,
@@ -25,7 +25,7 @@ def load_X_train(fname,asNpArray = True):
         return data
 
 
-def load_X_test(fname, asNpArray = True):
+def load_X_test(fname, asNpArray = False):
     data = pd.read_csv(fname,
                        index_col=1,
                        dtype=np.float32,
@@ -48,8 +48,13 @@ def write_Y(fname, Y_pred, X_test):
     data.to_csv(f)
 
 
+
 X_train = load_X_train("/home/tg/Projects/Data/pr2/train.csv")
 Y = load_Y("/home/tg/Projects/Data/pr2/train.csv")
 X_test = load_X_test("/home/tg/Projects/Data/pr2/test.csv")
 y_z = np.ones([X_test.shape[1],1])
 write_Y("/home/tg/Projects/Data/pr2/handin_test.csv",y_z,X_test)
+
+print(X_train.index)
+print(X_train.columns)
+print(np.shape())

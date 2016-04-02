@@ -1,0 +1,119 @@
+16_04_01_21_17 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_21_23 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_21_23 - Linear_SVM - score: 0.0000 - param: 0
+16_04_01_21_23 - RBF_SVM - score: 0.0000 - param: 0
+16_04_01_21_23 - Poly_SVM - score: 0.0000 - param: 0
+16_04_01_21_23 - Sigmoid_SVM - score: 0.0000 - param: 0
+16_04_01_21_23 - Decision_Tree - score: 0.8230 - param: {'max_depth': 9, 'max_features': 2}
+16_04_01_21_23 - Random_Forest - score: 0.0000 - param: 0
+16_04_01_21_23 - AdaBoost - score: 0.0000 - param: 0
+16_04_01_21_30 - Nearest_Neighbors - score: 0.9030 - param: {'n_neighbors': 5, 'leaf_size': 5}
+16_04_01_21_30 - Nearest_Neighbors - score: 0.9030 - param: {'n_neighbors': 5, 'leaf_size': 5}
+16_04_01_21_32 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_21_32 - Linear_SVM - score: 0.0000 - param: 0
+16_04_01_21_32 - RBF_SVM - score: 0.0000 - param: 0
+16_04_01_21_32 - Poly_SVM - score: 0.0000 - param: 0
+16_04_01_21_32 - Sigmoid_SVM - score: 0.0000 - param: 0
+16_04_01_21_32 - Decision_Tree - score: 0.7950 - param: {'max_depth': 9, 'max_features': 2}
+16_04_01_21_32 - Random_Forest - score: 0.0000 - param: 0
+16_04_01_21_32 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_21_35 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_21_36 - Nearest_Neighbors - score: 0.9030 - param: {'n_neighbors': 5, 'leaf_size': 5}
+16_04_01_21_38 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_21_39 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_21_40 - Nearest_Neighbors - score: 0.9030 - param: {'n_neighbors': 5, 'leaf_size': 5}
+16_04_01_21_41 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_21_41 - Linear_SVM - score: 0.0000 - param: 0
+16_04_01_21_42 - RBF_SVM - score: 0.0000 - param: 0
+16_04_01_21_42 - Poly_SVM - score: 0.0000 - param: 0
+16_04_01_21_42 - Sigmoid_SVM - score: 0.0000 - param: 0
+16_04_01_21_42 - Decision_Tree - score: 0.8030 - param: {'max_features': 2, 'max_depth': 7}
+16_04_01_21_42 - Random_Forest - score: 0.9100 - param: {'max_features': 2, 'max_depth': 14, 'n_estimators': 25}
+16_04_01_21_42 - AdaBoost - score: 0.7930 - param: {'n_estimators': 30}
+16_04_01_21_44 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_21_44 - Linear_SVM - score: 0.8660 - param: {'C': 0.84999999999999998}
+16_04_01_21_44 - RBF_SVM - score: 0.7010 - param: {'C': 1.0, 'gamma': 0.050000000000000003}
+16_04_01_21_46 - Poly_SVM - score: 0.0000 - param: 0
+16_04_01_21_46 - Sigmoid_SVM - score: 0.3480 - param: {'C': 0.050000000000000003, 'gamma': 0.050000000000000003}
+16_04_01_21_46 - Decision_Tree - score: 0.8090 - param: {'max_depth': 9, 'max_features': 2}
+16_04_01_21_46 - Random_Forest - score: 0.9100 - param: {'max_depth': 13, 'n_estimators': 25, 'max_features': 2}
+16_04_01_21_47 - AdaBoost - score: 0.7930 - param: {'n_estimators': 30}
+16_04_01_21_54 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_21_54 - Linear_SVM - score: 0.8660 - param: {'C': 0.84999999999999998}
+16_04_01_21_54 - RBF_SVM - score: 0.7010 - param: {'gamma': 0.050000000000000003, 'C': 1.0}
+16_04_01_21_56 - Poly_SVM - score: 0.0000 - param: 0
+16_04_01_21_56 - Sigmoid_SVM - score: 0.3480 - param: {'gamma': 0.050000000000000003, 'C': 0.050000000000000003}
+16_04_01_21_56 - Decision_Tree - score: 0.8000 - param: {'max_depth': 9, 'max_features': 2}
+16_04_01_21_56 - Random_Forest - score: 0.9100 - param: {'max_depth': 13, 'n_estimators': 25, 'max_features': 2}
+16_04_01_21_56 - AdaBoost - score: 0.7930 - param: {'n_estimators': 30}
+16_04_01_21_57 - Naive_Bayes - score: 0.8211
+16_04_01_21_57 - Linear_Discriminant_Analysis - score: 0.8698
+16_04_01_21_57 - Quadratic_Discriminant_Analysis - score: 0.8721
+16_04_01_21_58 - Nearest_Neighbors - score: 0.9030 - param: {'n_neighbors': 5, 'leaf_size': 5}
+16_04_01_21_58 - Linear_SVM - score: 0.8660 - param: {'C': 0.84999999999999998}
+16_04_01_21_59 - RBF_SVM - score: 0.7010 - param: {'gamma': 0.050000000000000003, 'C': 1.0}
+16_04_01_22_00 - Poly_SVM - score: 0.0000 - param: 0
+16_04_01_22_00 - Sigmoid_SVM - score: 0.3480 - param: {'gamma': 0.050000000000000003, 'C': 0.050000000000000003}
+16_04_01_22_01 - Decision_Tree - score: 0.7930 - param: {'max_depth': 9, 'max_features': 2}
+16_04_01_22_01 - Random_Forest - score: 0.9100 - param: {'max_depth': 7, 'n_estimators': 20, 'max_features': 2}
+16_04_01_22_01 - AdaBoost - score: 0.7930 - param: {'n_estimators': 30}
+16_04_01_22_01 - Naive_Bayes - score: 0.8211
+16_04_01_22_01 - Linear_Discriminant_Analysis - score: 0.8698
+16_04_01_22_01 - Quadratic_Discriminant_Analysis - score: 0.8721
+16_04_01_22_06 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_22_06 - Linear_SVM - score: 0.8660 - param: {'C': 0.84999999999999998}
+16_04_01_22_06 - RBF_SVM - score: 0.0000 - param: 0
+16_04_01_22_06 - Nearest_Neighbors - score: 0.9030 - param: {'n_neighbors': 5, 'leaf_size': 5}
+16_04_01_22_06 - Linear_SVM - score: 0.8660 - param: {'C': 0.84999999999999998}
+16_04_01_22_07 - RBF_SVM - score: 0.7010 - param: {'gamma': 0.050000000000000003, 'C': 1.0}
+16_04_01_22_08 - Poly_SVM - score: 0.0000 - param: 0
+16_04_01_22_17 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_22_18 - Nearest_Neighbors - score: 0.9030 - param: {'n_neighbors': 5, 'leaf_size': 5}
+16_04_01_22_29 - Nearest_Neighbors - score: 0.9030 - param: {'n_neighbors': 5, 'leaf_size': 5}
+16_04_01_22_29 - Linear_SVM - score: 0.8660 - param: {'C': 0.84999999999999998}
+16_04_01_22_29 - RBF_SVM - score: 0.7010 - param: {'gamma': 0.050000000000000003, 'C': 1.0}
+16_04_01_22_30 - Poly_SVM - score: 0.0000 - param: 0
+16_04_01_22_41 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 5}
+16_04_01_22_41 - Linear_SVM - score: 0.8660 - param: {'C': 0.84999999999999998}
+16_04_01_22_41 - RBF_SVM - score: 0.7010 - param: {'C': 1.0, 'gamma': 0.050000000000000003}
+16_04_01_22_43 - Sigmoid_SVM - score: 0.3480 - param: {'C': 0.050000000000000003, 'gamma': 0.050000000000000003}
+16_04_01_22_43 - Decision_Tree - score: 0.7940 - param: {'max_features': 2, 'max_depth': 9}
+16_04_01_22_43 - Random_Forest - score: 0.9160 - param: {'max_features': 2, 'max_depth': 13, 'n_estimators': 20}
+16_04_01_22_43 - AdaBoost - score: 0.7930 - param: {'n_estimators': 30}
+16_04_01_22_45 - Nearest_Neighbors - score: 0.9030 - param: {'n_neighbors': 5, 'leaf_size': 5}
+16_04_01_22_45 - Linear_SVM - score: 0.8660 - param: {'C': 0.84999999999999998}
+16_04_01_22_45 - RBF_SVM - score: 0.7010 - param: {'C': 1.0, 'gamma': 0.050000000000000003}
+16_04_01_22_47 - Sigmoid_SVM - score: 0.3480 - param: {'C': 0.050000000000000003, 'gamma': 0.050000000000000003}
+16_04_01_22_48 - Decision_Tree - score: 0.8000 - param: {'max_depth': 8, 'max_features': 2}
+16_04_01_22_48 - Random_Forest - score: 0.9100 - param: {'max_depth': 12, 'max_features': 2, 'n_estimators': 25}
+16_04_01_22_48 - AdaBoost - score: 0.7930 - param: {'n_estimators': 30}
+16_04_01_23_45 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 5, 'n_neighbors': 8}
+16_04_01_23_45 - Random_Forest - score: 0.9100 - param: {'max_depth': 9, 'n_estimators': 25, 'max_features': 2}
+16_04_01_23_46 - Nearest_Neighbors - score: 0.9030 - param: {'leaf_size': 2, 'n_neighbors': 8}
+16_04_01_23_46 - Random_Forest - score: 0.9130 - param: {'max_features': 2, 'max_depth': 13, 'n_estimators': 20}
+16_04_01_23_48 - Nearest_Neighbors - score: 0.9030 - param: {'n_neighbors': 8, 'leaf_size': 7}
+16_04_01_23_48 - Random_Forest - score: 0.9210 - param: {'max_features': 2, 'max_depth': 12, 'n_estimators': 390}
+16_04_02_00_14 - Nearest_Neighbors - score: 0.8960 - param: {'n_neighbors': 18, 'leaf_size': 5}
+16_04_02_00_14 - Random_Forest - score: 0.9190 - param: {'max_depth': 13, 'max_features': 2, 'n_estimators': 100}
+16_04_02_00_31 - Nearest_Neighbors - score: 0.0000 - param: 0
+16_04_02_00_31 - Random_Forest - score: 0.0000 - param: 0
+16_04_02_00_32 - Random_Forest - score: 0.9200 - param: {'n_estimators': 340, 'max_features': 2, 'max_depth': 9}
+16_04_02_00_48 - Extra_Trees - score: 0.9220 - param: {'n_estimators': 210, 'max_features': 2, 'max_depth': 13}
+16_04_02_01_03 - Random_Forest - score: 0.0000 - param: 0
+16_04_02_01_03 - Extra_Trees - score: 0.0000 - param: 0
+16_04_02_01_03 - Gradient_Boosting - score: 0.0000 - param: 0
+16_04_02_01_54 - Random_Forest - score: 0.0000 - param: 0
+16_04_02_01_55 - Random_Forest - score: 0.0000 - param: 0
+16_04_02_01_56 - Random_Forest - score: 0.9190 - param: {'max_depth': 13, 'n_estimators': 320}
+16_04_02_02_02 - Extra_Trees - score: 0.9230 - param: {'max_depth': 13, 'n_estimators': 210}
+16_04_02_02_04 - Gradient_Boosting - score: 0.0000 - param: 0
+16_04_02_07_59 - Gradient_Boosting - score: 0.9140 - param: {'learning_rate': 0.76249999999999996, 'n_estimators': 150, 'max_depth': 2}
+16_04_02_08_24 - Poly_SVM - score: 0.8640 - param: {'degree': 2, 'C': 0.28749999999999998, 'gamma': 5.0}
+16_04_02_08_28 - Gradient_Boosting - score: 0.9120 - param: {'max_depth': 5, 'learning_rate': 0.5, 'n_estimators': 600}
+16_04_02_10_24 - Gradient_Boosting - score: 0.9140 - param: {'max_depth': 2, 'n_estimators': 600, 'learning_rate': 0.90000000000000002}
+16_04_02_11_01 - Extra_Trees - score: 0.0000 - param: 0
+16_04_02_11_02 - Extra_Trees - score: 0.0000 - param: 0
+16_04_02_11_02 - Extra_Trees - score: 0.0000 - param: 0
+16_04_02_11_03 - Extra_Trees - score: 0.0000 - param: 0
+16_04_02_11_11 - Extra_Trees - score: 0.0000 - param: 0
+16_04_02_12_12 - Gradient_Boosting - score: 0.0000 - param: 0

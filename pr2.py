@@ -56,7 +56,7 @@ param_grid = [#{'n_neighbors': np.arange(3,150,15,dtype=np.int16),'leaf_size':np
               #{'max_depth': np.arange(3,10,dtype=np.int16), 'max_features': np.arange(1,3,dtype=np.int16)},
               #{'max_depth': np.arange(8,15,dtype=np.int16), 'n_estimators': np.arange(300,400,10,dtype=np.int16)},
               {'criterion': ['gini','entropy'],
-               'max_features': [2,cd'auto','sqrt','log2'],
+               'max_features': [2,'auto','sqrt','log2'],
                'max_depth': np.arange(5,15,dtype=np.int16),
                'n_estimators': np.arange(150,700,50,dtype=np.int16),
                'min_samples_split': np.arange(1,3,dtype=np.int16),

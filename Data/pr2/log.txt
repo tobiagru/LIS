@@ -119,3 +119,12 @@
 16_04_02_12_12 - Gradient_Boosting - score: 0.0000 - param: 0
 16_04_02_12_31 - Extra_Trees - score: 0.0000 - param: 0
 16_04_07_23_56 - Gradient_Boosting - score: 0.0000 - param: 0
+16_04_08_23_22 - RBF_SVM - score: 0.0000 - param: 0
+16_04_08_23_25 - RBF_SVM - score: 0.0000 - param: 0
+16_04_08_23_25 - RBF_SVM - score: 0.0000 - param: 0
+16_04_08_23_26 - RBF_SVM - score: 0.0000 - param: 0
+16_04_08_23_29 - RBF_SVM - score: 0.0000 - param: 0
+16_04_08_23_36 - RBF_SVM - score: 0.0000 - param: 0
+16_04_08_23_41 - RBF_SVM - score: 0.0000 - param: 0
+16_04_08_23_51 - RBF_SVM - score: 0.9130 - param: {'estimator__shrinking': True, 'estimator__gamma': 0.01, 'estimator__C': 0.87992254356910693, 'estimator__probability': True, 'estimator__class_weight': None}
+16_04_09_00_04 - RBF_SVM - score: 0.9340 - param: {'estimator__C': 3.1622776601683795, 'estimator__gamma': 0.0031622776601683794}

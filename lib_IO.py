@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import h5py
 import sys
 import traceback
 
@@ -54,6 +55,17 @@ def load_Ids_test(fname):
                    delimiter = ',',
                    skiprows = 1,
                    usecols = [0])
+
+def load_h5_train(fname):
+    f = h5py.File(fname, 'r+')
+    ids = np.zeros(f["train/axis1"].shape, dtype=np.int32)
+    f["train/axis1"].read_direct(ids)
+    X_train = np.zeros(f["train/axis1"].shape, dtype=np.int32)
+    f["train/axis1"].read_direct(ids)
+    y_train = np.zeros(f["train/axis1"].shape, dtype=np.int32)
+    f["train/axis1"].read_direct(ids)
+
+
 
 def write_Y(fname, Y_pred, X_test = 0, Ids = 0):
     if X_test is not 0:

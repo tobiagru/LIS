@@ -5,6 +5,7 @@ import logging
 import sys
 import h5py
 from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import label_binarize
 
 from keras import backend as K
 
@@ -12,6 +13,8 @@ from keras.models import Sequential
 
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.layers.core import Activation, Dense, Dropout, Flatten, Reshape
+from keras.layers.recurrent import LSTM
+from keras.layers.embeddings import Embedding
 from keras.layers.advanced_activations import LeakyReLU
 from keras.regularizers import l2
 #from keras.engine.training import batch_shuffle
@@ -30,7 +33,9 @@ nb_epoch = 50
 
 batch_size = 120
 
+num_classes = 5
 
+classes = [0,1,2,3,4]
 
 ###############
 
@@ -38,8 +43,9 @@ logging.info("Loading dataset '{0}'".format(fname_train))
 openfile = h5py.File(fname_train)
 
 lab = openfile["train/block1_values"]
-labels = np.zeros(lab.shape, dtype=np.uint8)
+labels = np.zeros([lab.shape[0],num_classes], dtype=np.uint8)
 lab.read_direct(labels)
+labels = label_binarize(labels, classes)
 
 feat = openfile["train/block0_values"]
 features = np.zeros(feat.shape, dtype=np.float32)
@@ -89,8 +95,31 @@ def objective(self, y_true, y_pred):
 optimizer = SGD(lr=0.001, momentum=0.9, decay=0.00016667, nesterov=False)
 
 
+
 opts1 = [
-    #recreate LSTM sequence classification
+    {
+    "layer": "Embedding",
+    "output_dim": 256,
+    "input_dim": 100
+    },
+    {
+    "layer": "LSTM",
+    "output_dim": 128,
+    "activation": "sigmoid",
+    "inner_activation": "hard_sigmoid"
+    },
+    {
+    "layer": "DropOut",
+    #Dropout
+    "p": 0.5,
+    },
+    {
+    "layer": "Dense",
+    #Dense
+    "output_dim": num_classes,
+    #Dense & Conv
+    "activation": "sigmoid",
+    },
 ]
 
 opts2=[
@@ -124,7 +153,7 @@ opts2=[
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 5,
+    "output_dim": num_classes,
     #Dense & Conv
     "activation": "relu",
     },
@@ -140,7 +169,38 @@ opts3 = [
 ]
 
 opts4 = [
-    #recreate different MLP
+    {
+    "layer": "Dense",
+    #Dense
+    "output_dim": 64,
+    #Dense & Conv
+    "activation": "relu",
+    "input_dim": 100
+    },
+    {
+    "layer": "DropOut",
+    #Dropout
+    "p": 0.5,
+    },
+    {
+    "layer": "Dense",
+    #Dense
+    "output_dim": 64,
+    #Dense & Conv
+    "activation": "relu",
+    },
+    {
+    "layer": "DropOut",
+    #Dropout
+    "p": 0.5,
+    },
+    {
+    "layer": "Dense",
+    #Dense
+    "output_dim": num_classes,
+    #Dense & Conv
+    "activation": "linear",
+    },
 ]
 
 opts5 = [
@@ -172,18 +232,18 @@ opts5 = [
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 5,
+    "output_dim": num_classes,
     #Dense & Conv
     "activation": "linear",
     },
 ]
 
 mdl_cfgs = [
-#    {"name": "net1", "opts": opts1},
-    {"name": "net2", "opts": opts2},
-#    {"name": "net3", "opts": opts3},
-#    {"name": "net4", "opts": opts4},
-    {"name": "net5", "opts": opts5},
+    {"name": "LSTM_sequence", "opts": opts1},
+    {"name": "Multi_Dense", "opts": opts2},
+#    {"name": "LSTM_stacked_stateful", "opts": opts3},
+    {"name": "MLP1", "opts": opts4},
+    {"name": "MLP2", "opts": opts5},
 ]
 
 
@@ -219,6 +279,22 @@ for mdl_cfg in mdl_cfgs:
                                     border_mode='valid',
                                     W_regularizer=l2(0.001),
                                     b_regularizer=l2(0.001)))
+            elif opts["layer"] == "Embedding":
+                mdl.add(Embedding(
+                    output_dim=opts["output_dim"],
+                    init='normal',
+                    input_dim=opts["input_dim"],
+                    W_regularizer=l2(0.001)
+                ))
+            elif opts["layer"] == "LSTM":
+                mdl.add(LSTM(output_dim=opts["output_dim"],
+                                init='normal',
+                                input_dim=opts["input_dim"],
+                                activation= opts["activation"],
+                                inner_activation = opts["inner_activation"],
+                                W_regularizer=l2(0.001),
+                                b_regularizer=l2(0.001)))
+
             start = False
 
         else:
@@ -254,6 +330,13 @@ for mdl_cfg in mdl_cfgs:
                 mdl.add(Activation(LeakyReLU(alpha=0.1)))
             elif opts["layer"] == "Flatten":
                 mdl.add(Flatten())
+            elif opts["layer"] == "LSTM":
+                mdl.add(LSTM(output_dim=opts["output_dim"],
+                                init='normal',
+                                activation= opts["activation"],
+                                inner_activation = opts["inner_activation"],
+                                W_regularizer=l2(0.001),
+                                b_regularizer=l2(0.001)))
 
         logging.info("Layer: " + opts["layer"] + " shape={0}".format(mdl.output_shape))
 
@@ -266,7 +349,7 @@ for mdl_cfg in mdl_cfgs:
 
     logging.info("compiled model {0}".format(mdl_cfg["name"]))
 
-    # mdl.fit(x=features_train,
+    #mdl.fit(x=features_train,
     #           y=labels_train,
     #           nb_epoch=nb_epoch,
     #           batch_size=batch_size,
@@ -274,16 +357,16 @@ for mdl_cfg in mdl_cfgs:
     #           verbose=1)
     #logging.info("fit model {0}".format(mdl_cfg["name"]))
 
-    mdl.load_weights(filepath="/home/tg/Projects/LIS/weights_net2")
-    logging.info("load weights from {0}".format("/home/tg/Projects/LIS/weights_net2"))
+    #mdl.load_weights(filepath="/home/tg/Projects/LIS/weights_net2")
+    #logging.info("load weights from {0}".format("/home/tg/Projects/LIS/weights_net2"))
 
-    # mdl.save_weights("weights_" + mdl_cfg["name"] , overwrite=False)
-    # logging.info("save weights as {0}".format("weights_" + mdl_cfg["name"] + ".h5"))
+    #mdl.save_weights("weights_" + mdl_cfg["name"] , overwrite=False)
+    #logging.info("save weights as {0}".format("weights_" + mdl_cfg["name"] + ".h5"))
 
-    score = mdl.evaluate(features_valid, labels_valid, batch_size= 64, verbose = 1)
-    logging.info("test model {0} scored {1}".format(mdl_cfg["name"],score))
+    #score = mdl.evaluate(features_valid, labels_valid, batch_size= 64, verbose = 1)
+    #logging.info("test model {0} scored {1}".format(mdl_cfg["name"],score))
 
-    labels_test = mdl.predict_classes(features_test, batch_size = 32, verbose = 1)
-    logging.info("save predictions as {0}".format("weights_" + mdl_cfg["name"]))
+    #labels_test = mdl.predict_classes(features_test, batch_size = 32, verbose = 1)
+    #logging.info("save predictions as {0}".format("weights_" + mdl_cfg["name"]))
 
-    lib_IO.write_Y("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + ".csv", Y_pred=labels_test, Ids=ids)
+    #lib_IO.write_Y("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + ".csv", Y_pred=labels_test, Ids=ids)

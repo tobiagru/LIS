@@ -30,13 +30,17 @@ fname_train = "/home/tg/Projects/LIS/Data/pr3/train.h5"
 
 fname_test = "/home/tg/Projects/LIS/Data/pr3/test.h5"
 
-nb_epoch = 30
+nb_epoch = 50
 
 batch_size = 120
 
-#num_classes = 5
+num_classes = 5
+#num_classes = 1
 
 classes = [0,1,2,3,4]
+
+lr_rte = 0.01
+nestrove = True
 
 ###############
 
@@ -93,18 +97,18 @@ labels = None
 def objective(self, y_true, y_pred):
         return K.categorical_crossentropy(y_pred, y_true)
 
-optimizer = SGD(lr=0.005, nesterov=True)
+optimizer = SGD(lr=lr_rte, nesterov=nestrove)
 
 
 opts1 = [
     {
     "layer": "Embedding",
-    "output_dim": 512,
+    "output_dim": 264,
     "input_dim": 100
     },
     {
     "layer": "LSTM",
-    "output_dim": 265,
+    "output_dim": 128,
     "activation": "sigmoid",
     "inner_activation": "hard_sigmoid"
     },
@@ -240,11 +244,12 @@ opts5 = [
 ]
 
 mdl_cfgs = [
-    {"name": "LSTM_sequence", "opts": opts1},
+
 #    {"name": "LSTM_stacked_stateful", "opts": opts3},
     {"name": "MLP1", "opts": opts4},
-    {"name": "MLP2", "opts": opts5},
+#    {"name": "MLP2", "opts": opts5},
     {"name": "Multi_Dense", "opts": opts2},
+    {"name": "LSTM_sequence", "opts": opts1},
 ]
 
 
@@ -346,8 +351,8 @@ for mdl_cfg in mdl_cfgs:
 
     mdl.add(Activation("softmax"))
 
-    #mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
-    mdl.compile(loss=objective, optimizer=optimizer, metrics=["accuracy"])
+    mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
+    #mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
 
     logging.info("compiled model {0}".format(mdl_cfg["name"]))
 

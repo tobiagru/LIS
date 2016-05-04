@@ -1,4 +1,4 @@
-
+import math
 import lib_IO
 import numpy as np
 import logging
@@ -30,7 +30,7 @@ fname_train = "/home/tg/Projects/LIS/Data/pr3/train.h5"
 
 fname_test = "/home/tg/Projects/LIS/Data/pr3/test.h5"
 
-nb_epoch = 50
+
 
 batch_size = 120
 
@@ -39,8 +39,11 @@ num_classes = 5
 
 classes = [0,1,2,3,4]
 
-lr_rte = 0.01
+lr_rte = 0.001
 nestrove = True
+
+nb_epoch = -20 * math.log(lr_rte, 10)
+print("lr_rate: {0} -- nb_epochs; {1}".format(lr_rte,nb_epoch))
 
 ###############
 
@@ -130,7 +133,7 @@ opts2=[
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 1028,
+    "output_dim": 2048,
     #Dense & Conv
     "activation": "linear",
     "input_dim": 100
@@ -138,7 +141,7 @@ opts2=[
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 512,
+    "output_dim": 1024,
     #Dense & Conv
     "activation": "relu",
     },
@@ -150,7 +153,7 @@ opts2=[
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 265,
+    "output_dim": 512,
     #Dense & Conv
     "activation": "linear",
     },
@@ -177,7 +180,7 @@ opts4 = [
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 1028,
+    "output_dim": 2048,
     #Dense & Conv
     "activation": "relu",
     "input_dim": 100
@@ -190,7 +193,7 @@ opts4 = [
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 512,
+    "output_dim": 1024,
     #Dense & Conv
     "activation": "relu",
     },

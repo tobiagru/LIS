@@ -70,7 +70,7 @@ def load_h5_train(fname):
 def write_Y(fname, Y_pred, X_test = 0, Ids = 0):
     if X_test is not 0:
         if Y_pred.shape[0] != X_test.as_matrix().shape[0]:
-            print("error - dimension of y matrix does not match number of expected predictions")
+            print("error X_test- dimension of y matrix does not match number of expected predictions")
             print('y: {0} - expected: {1}'.format(Y_pred.shape,X_test.as_matrix().shape))
         else:
             data = pd.DataFrame(data = Y_pred, index = X_test.index, columns = ['y'])
@@ -79,7 +79,7 @@ def write_Y(fname, Y_pred, X_test = 0, Ids = 0):
             f.close()
     elif Ids is not 0:
         if Y_pred.shape[0] != Ids.shape[0]:
-            print("error - dimension of y matrix does not match number of expected predictions")
+            print("error Ids- dimension of y matrix does not match number of expected predictions")
             print('y: {0} - expected: {1}'.format(Y_pred.shape,Ids.shape))
         else:
             np.savetxt(fname=fname,X= np.column_stack([Ids,Y_pred]),

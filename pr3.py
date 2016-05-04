@@ -4,6 +4,7 @@ import numpy as np
 import logging
 import sys
 import h5py
+import datetime
 from sklearn.cross_validation import train_test_split
 from sklearn.preprocessing import label_binarize
 
@@ -29,11 +30,11 @@ fname_train = "/home/tg/Projects/LIS/Data/pr3/train.h5"
 
 fname_test = "/home/tg/Projects/LIS/Data/pr3/test.h5"
 
-nb_epoch = 50
+nb_epoch = 30
 
 batch_size = 120
 
-num_classes = 5
+#num_classes = 5
 
 classes = [0,1,2,3,4]
 
@@ -43,7 +44,7 @@ logging.info("Loading dataset '{0}'".format(fname_train))
 openfile = h5py.File(fname_train)
 
 lab = openfile["train/block1_values"]
-labels = np.zeros([lab.shape[0],num_classes], dtype=np.uint8)
+labels = np.zeros(lab.shape, dtype=np.uint8)
 lab.read_direct(labels)
 labels = label_binarize(labels, classes)
 
@@ -92,19 +93,18 @@ labels = None
 def objective(self, y_true, y_pred):
         return K.categorical_crossentropy(y_pred, y_true)
 
-optimizer = SGD(lr=0.001, momentum=0.9, decay=0.00016667, nesterov=False)
-
+optimizer = SGD(lr=0.005, nesterov=True)
 
 
 opts1 = [
     {
     "layer": "Embedding",
-    "output_dim": 256,
+    "output_dim": 512,
     "input_dim": 100
     },
     {
     "layer": "LSTM",
-    "output_dim": 128,
+    "output_dim": 265,
     "activation": "sigmoid",
     "inner_activation": "hard_sigmoid"
     },
@@ -126,7 +126,7 @@ opts2=[
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 2048,
+    "output_dim": 1028,
     #Dense & Conv
     "activation": "linear",
     "input_dim": 100
@@ -134,7 +134,7 @@ opts2=[
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 1024,
+    "output_dim": 512,
     #Dense & Conv
     "activation": "relu",
     },
@@ -146,7 +146,7 @@ opts2=[
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 512,
+    "output_dim": 265,
     #Dense & Conv
     "activation": "linear",
     },
@@ -154,6 +154,7 @@ opts2=[
     "layer": "Dense",
     #Dense
     "output_dim": num_classes,
+    #"output_dim": 1,
     #Dense & Conv
     "activation": "relu",
     },
@@ -172,7 +173,7 @@ opts4 = [
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 64,
+    "output_dim": 1028,
     #Dense & Conv
     "activation": "relu",
     "input_dim": 100
@@ -185,7 +186,7 @@ opts4 = [
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 64,
+    "output_dim": 512,
     #Dense & Conv
     "activation": "relu",
     },
@@ -207,7 +208,7 @@ opts5 = [
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 64,
+    "output_dim": 728,
     #Dense & Conv
     "activation": "tanh",
     "input_dim": 100
@@ -220,7 +221,7 @@ opts5 = [
     {
     "layer": "Dense",
     #Dense
-    "output_dim": 64,
+    "output_dim": 1028,
     #Dense & Conv
     "activation": "tanh",
     },
@@ -240,10 +241,10 @@ opts5 = [
 
 mdl_cfgs = [
     {"name": "LSTM_sequence", "opts": opts1},
-    {"name": "Multi_Dense", "opts": opts2},
 #    {"name": "LSTM_stacked_stateful", "opts": opts3},
     {"name": "MLP1", "opts": opts4},
     {"name": "MLP2", "opts": opts5},
+    {"name": "Multi_Dense", "opts": opts2},
 ]
 
 
@@ -345,28 +346,37 @@ for mdl_cfg in mdl_cfgs:
 
     mdl.add(Activation("softmax"))
 
-    mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
+    #mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
+    mdl.compile(loss=objective, optimizer=optimizer, metrics=["accuracy"])
 
     logging.info("compiled model {0}".format(mdl_cfg["name"]))
 
-    #mdl.fit(x=features_train,
-    #           y=labels_train,
-    #           nb_epoch=nb_epoch,
-    #           batch_size=batch_size,
-    #           shuffle=True,
-    #           verbose=1)
-    #logging.info("fit model {0}".format(mdl_cfg["name"]))
+    mdl.fit(x=features_train,
+              y=labels_train,
+              nb_epoch=nb_epoch,
+              batch_size=batch_size,
+              shuffle=True,
+              verbose=1)
+    logging.info("fit model {0}".format(mdl_cfg["name"]))
 
     #mdl.load_weights(filepath="/home/tg/Projects/LIS/weights_net2")
     #logging.info("load weights from {0}".format("/home/tg/Projects/LIS/weights_net2"))
 
-    #mdl.save_weights("weights_" + mdl_cfg["name"] , overwrite=False)
-    #logging.info("save weights as {0}".format("weights_" + mdl_cfg["name"] + ".h5"))
+    mdl.save_weights("/home/tg/Projects/LIS/Data/pr3/weights_" + mdl_cfg["name"] + "_{0}.h5".format(datetime.datetime.now()) , overwrite=False)
+    logging.info("save weights as {0}".format("weights_" + mdl_cfg["name"] + "_{0}.h5".format(datetime.datetime.now())))
 
-    #score = mdl.evaluate(features_valid, labels_valid, batch_size= 64, verbose = 1)
-    #logging.info("test model {0} scored {1}".format(mdl_cfg["name"],score))
+    score = mdl.evaluate(features_valid, labels_valid, batch_size= 32, verbose = 1)
+    logging.info("test model {0} scored {1}".format(mdl_cfg["name"],score))
 
-    #labels_test = mdl.predict_classes(features_test, batch_size = 32, verbose = 1)
-    #logging.info("save predictions as {0}".format("weights_" + mdl_cfg["name"]))
-
-    #lib_IO.write_Y("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + ".csv", Y_pred=labels_test, Ids=ids)
+    labels_test = mdl.predict_classes(features_test, batch_size = 32, verbose = 1)
+    # print(labels_test.shape)
+    # print(labels_test[0:10])
+    # labels_test_tmp = np.zeros([labels_test[0],],dtype=np.uint8)
+    # for it in range(0,labels_test_tmp.shape[0]):
+    #     for n in range(0,5):
+    #         if labels_test[it,n] == 1:
+    #             labels_test_tmp[it] = n
+    # labels_test = labels_test_tmp
+    # print(labels_test.shape)
+    lib_IO.write_Y("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0}.csv".format(datetime.datetime.now()), Y_pred=labels_test, Ids=ids_test)
+    logging.info("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + ".csv")

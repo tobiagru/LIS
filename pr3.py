@@ -40,9 +40,11 @@ num_classes = 5
 classes = [0,1,2,3,4]
 
 lr_rte = 0.001
-nestrove = True
+momentum = 0.9
+lr_decay = 0.0005
+nestrove = False
 
-nb_epoch = -20 * math.log(lr_rte, 10)
+nb_epoch = int(-20 * math.log(lr_rte, 10))
 print("lr_rate: {0} -- nb_epochs; {1}".format(lr_rte,nb_epoch))
 
 ###############
@@ -100,7 +102,7 @@ labels = None
 def objective(self, y_true, y_pred):
         return K.categorical_crossentropy(y_pred, y_true)
 
-optimizer = SGD(lr=lr_rte, nesterov=nestrove)
+optimizer = SGD(lr=lr_rte,momentum=momentum,decay = lr_decay,nesterov = nestrove)
 
 
 opts1 = [
@@ -205,6 +207,18 @@ opts4 = [
     {
     "layer": "Dense",
     #Dense
+    "output_dim": 1024,
+    #Dense & Conv
+    "activation": "relu",
+    },
+    {
+    "layer": "DropOut",
+    #Dropout
+    "p": 0.5,
+    },
+    {
+    "layer": "Dense",
+    #Dense
     "output_dim": num_classes,
     #Dense & Conv
     "activation": "linear",
@@ -251,8 +265,8 @@ mdl_cfgs = [
 #    {"name": "LSTM_stacked_stateful", "opts": opts3},
     {"name": "MLP1", "opts": opts4},
 #    {"name": "MLP2", "opts": opts5},
-    {"name": "Multi_Dense", "opts": opts2},
-    {"name": "LSTM_sequence", "opts": opts1},
+#    {"name": "Multi_Dense", "opts": opts2},
+#    {"name": "LSTM_sequence", "opts": opts1},
 ]
 
 

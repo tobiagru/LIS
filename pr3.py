@@ -39,12 +39,12 @@ num_classes = 5
 
 classes = [0,1,2,3,4]
 
-lr_rte = 0.001
+lr_rte = 0.005
 momentum = 0.9
-lr_decay = 0.0005
+lr_decay = 0.0001
 nestrove = False
 
-nb_epoch = int(-20 * math.log(lr_rte, 10))
+nb_epoch = int(-20 * math.log(lr_rte, 7))
 print("lr_rate: {0} -- nb_epochs; {1}".format(lr_rte,nb_epoch))
 
 ###############

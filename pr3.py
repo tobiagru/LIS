@@ -318,5 +318,5 @@ for lr_rte in lr_rtes:
         #             labels_test_tmp[it] = n
         # labels_test = labels_test_tmp
         # print(labels_test.shape)
-        lib_IO.write_Y("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0}.csv".format(datetime.datetime.now()), Y_pred=labels_test, Ids=ids_test)
+        lib_IO.write_Y("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0:.4f}.csv".format(score[1]), Y_pred=labels_test, Ids=ids_test)
         logging.info("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + ".csv")

@@ -30,23 +30,6 @@ fname_train = "/home/tg/Projects/LIS/Data/pr3/train.h5"
 
 fname_test = "/home/tg/Projects/LIS/Data/pr3/test.h5"
 
-
-
-batch_size = 120
-
-num_classes = 5
-#num_classes = 1
-
-classes = [0,1,2,3,4]
-
-lr_rte = 0.005
-momentum = 0.9
-lr_decay = 0.0001
-nestrove = False
-
-nb_epoch = int(-20 * math.log(lr_rte, 7))
-print("lr_rate: {0} -- nb_epochs; {1}".format(lr_rte,nb_epoch))
-
 ###############
 
 logging.info("Loading dataset '{0}'".format(fname_train))
@@ -102,303 +85,238 @@ labels = None
 def objective(self, y_true, y_pred):
         return K.categorical_crossentropy(y_pred, y_true)
 
-optimizer = SGD(lr=lr_rte,momentum=momentum,decay = lr_decay,nesterov = nestrove)
+
+batch_size = 120
+
+num_classes = 5
+#num_classes = 1
+
+classes = [0,1,2,3,4]
 
 
-opts1 = [
-    {
-    "layer": "Embedding",
-    "output_dim": 264,
-    "input_dim": 100
-    },
-    {
-    "layer": "LSTM",
-    "output_dim": 128,
-    "activation": "sigmoid",
-    "inner_activation": "hard_sigmoid"
-    },
-    {
-    "layer": "DropOut",
-    #Dropout
-    "p": 0.5,
-    },
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": num_classes,
-    #Dense & Conv
-    "activation": "sigmoid",
-    },
-]
 
-opts2=[
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": 2048,
-    #Dense & Conv
-    "activation": "linear",
-    "input_dim": 100
-    },
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": 1024,
-    #Dense & Conv
-    "activation": "relu",
-    },
-    {
-    "layer": "DropOut",
-    #Dropout
-    "p": 0.4,
-    },
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": 512,
-    #Dense & Conv
-    "activation": "linear",
-    },
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": num_classes,
-    #"output_dim": 1,
-    #Dense & Conv
-    "activation": "relu",
-    },
-    {
-    "layer": "DropOut",
-    #Dropout
-    "p": 0.3,
-    },
-]
-
-opts3 = [
-    #recreate stacked LSTM sequence classification with stateful
-]
-
-opts4 = [
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": 2048,
-    #Dense & Conv
-    "activation": "relu",
-    "input_dim": 100
-    },
-    {
-    "layer": "DropOut",
-    #Dropout
-    "p": 0.5,
-    },
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": 1024,
-    #Dense & Conv
-    "activation": "relu",
-    },
-    {
-    "layer": "DropOut",
-    #Dropout
-    "p": 0.5,
-    },
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": 1024,
-    #Dense & Conv
-    "activation": "relu",
-    },
-    {
-    "layer": "DropOut",
-    #Dropout
-    "p": 0.5,
-    },
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": num_classes,
-    #Dense & Conv
-    "activation": "linear",
-    },
-]
-
-opts5 = [
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": 728,
-    #Dense & Conv
-    "activation": "tanh",
-    "input_dim": 100
-    },
-    {
-    "layer": "DropOut",
-    #Dropout
-    "p": 0.5,
-    },
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": 1028,
-    #Dense & Conv
-    "activation": "tanh",
-    },
-    {
-    "layer": "DropOut",
-    #Dropout
-    "p": 0.5,
-    },
-    {
-    "layer": "Dense",
-    #Dense
-    "output_dim": num_classes,
-    #Dense & Conv
-    "activation": "linear",
-    },
-]
-
-mdl_cfgs = [
-
-#    {"name": "LSTM_stacked_stateful", "opts": opts3},
-    {"name": "MLP1", "opts": opts4},
-#    {"name": "MLP2", "opts": opts5},
-#    {"name": "Multi_Dense", "opts": opts2},
-#    {"name": "LSTM_sequence", "opts": opts1},
-]
+lr_rtes = [0.1, 0.05, 0.01, 0.005, 0.001, 0.0005]
+momentum = 0.9
+lr_decay = 0.0001
+nestrove = False
+nb_neurons = {"MLP":[100,200,400,800,1600],
+                "LSTM":[100,200,400,800],}
+activations = {"MLP":["relu","tanh","sigmoid"],
+               "LSTM":["relu","tanh","sigmoid"]}
+mdl_cfgs = list()
 
 
-###################################
+for type in ["MLP", "LSTM"]:
+    for nb_neuron in nb_neurons[type]:
+        for activation in activations[type]:
+            if type == "LSTM":
+                optsLSTM = [
+                    {
+                    "layer": "Embedding",
+                    "output_dim": nb_neuron,
+                    "input_dim": 100
+                    },
+                    {
+                    "layer": "LSTM",
+                    "output_dim": nb_neuron,
+                    "activation": activation,
+                    "inner_activation": "hard_sigmoid"
+                    },
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.5,
+                    },
+                    {
+                    "layer": "Dense",
+                    #Dense
+                    "output_dim": num_classes,
+                    #Dense & Conv
+                    "activation": activation,
+                    },
+                ]
+                mdl_cfgs.append({"name": "LSTM", "opts": optsLSTM})
+                print("LSTM - neurons: {0} - activation: {1}".format(nb_neuron,activation))
+            if type == "MLP":
+                optsMLP=[
+                    {
+                    "layer": "Dense",
+                    #Dense
+                    "output_dim": int(nb_neuron*2),
+                    #Dense & Conv
+                    "activation": "linear",
+                    "input_dim": 100
+                    },
+                    {
+                    "layer": "Dense",
+                    #Dense
+                    "output_dim": nb_neuron,
+                    #Dense & Conv
+                    "activation": activation,
+                    },
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.4,
+                    },
+                    {
+                    "layer": "Dense",
+                    #Dense
+                    "output_dim": int(nb_neuron/2),
+                    #Dense & Conv
+                    "activation": "linear",
+                    },
+                    {
+                    "layer": "Dense",
+                    #Dense
+                    "output_dim": num_classes,
+                    #"output_dim": 1,
+                    #Dense & Conv
+                    "activation": activation,
+                    },
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.3,
+                    },
+                ]
+                mdl_cfgs.append({"name": "MLP1", "opts": optsMLP})
+                print("MLP - neurons: {0} - activation: {1}".format(nb_neuron,activation))
 
-for mdl_cfg in mdl_cfgs:
+###########################################
+for lr_rte in lr_rtes:
+    nb_epoch = int(-20 * math.log(lr_rte, 7))
+    print("lr_rate: {0} -- nb_epochs; {1}".format(lr_rte,nb_epoch))
 
-    mdl = Sequential()
+    optimizer = SGD(lr=lr_rte,momentum=momentum,decay = lr_decay,nesterov = nestrove)
 
-    logging.info("initilized model {0}".format(mdl_cfg["name"]))
+    for mdl_cfg in mdl_cfgs:
 
-    start = True
-    for opts in mdl_cfg["opts"]:
+        mdl = Sequential()
 
-        if start is True:
-            if opts["layer"] == "Dense":
-                mdl.add(Dense(output_dim=opts["output_dim"],
-                            init='normal',
-                            input_dim=opts["input_dim"],
-                            activation= opts["activation"],
-                            W_regularizer=l2(0.001),
-                            b_regularizer=l2(0.001)))
+        logging.info("initilized model {0}".format(mdl_cfg["name"]))
 
-            elif opts["layer"] == "Conv":
-                mdl.add(Convolution2D(nb_filter=opts["nb_filter"],
-                                    nb_row=1,
-                                    nb_col=opts["nb_col"],
-                                    input_shape=[1,1,opts["input_dim"]],
-                                    dim_ordering='th',
-                                    subsample=[1,opts["subsample_length"]],
-                                    activation= opts["activation"],
-                                    init='normal',
-                                    border_mode='valid',
-                                    W_regularizer=l2(0.001),
-                                    b_regularizer=l2(0.001)))
-            elif opts["layer"] == "Embedding":
-                mdl.add(Embedding(
-                    output_dim=opts["output_dim"],
-                    init='normal',
-                    input_dim=opts["input_dim"],
-                    W_regularizer=l2(0.001)
-                ))
-            elif opts["layer"] == "LSTM":
-                mdl.add(LSTM(output_dim=opts["output_dim"],
+        start = True
+        for opts in mdl_cfg["opts"]:
+
+            if start is True:
+                if opts["layer"] == "Dense":
+                    mdl.add(Dense(output_dim=opts["output_dim"],
                                 init='normal',
                                 input_dim=opts["input_dim"],
                                 activation= opts["activation"],
-                                inner_activation = opts["inner_activation"],
                                 W_regularizer=l2(0.001),
                                 b_regularizer=l2(0.001)))
 
-            start = False
-
-        else:
-            if opts["layer"] == "Dense":
-                mdl.add(Dense(output_dim=opts["output_dim"],
-                                init='normal',
-                                activation= opts["activation"],
-                                W_regularizer=l2(0.001),
-                                b_regularizer=l2(0.001)))
-
-            elif opts["layer"] == "MaxPool":
-                mdl.add(MaxPooling2D(pool_size=[1,opts["pool_length"]],
-                                       dim_ordering='th',
-                                       strides=None,
-                                       border_mode='valid'))
-
-            elif opts["layer"] == "DropOut":
-                mdl.add(Dropout(p=opts["p"]))
-
-            elif opts["layer"] == "Conv":
-                mdl.add(Convolution2D(nb_filter=opts["nb_filter"],
+                elif opts["layer"] == "Conv":
+                    mdl.add(Convolution2D(nb_filter=opts["nb_filter"],
                                         nb_row=1,
                                         nb_col=opts["nb_col"],
-                                        subsample=[1,opts["subsample_length"]],
+                                        input_shape=[1,1,opts["input_dim"]],
                                         dim_ordering='th',
+                                        subsample=[1,opts["subsample_length"]],
                                         activation= opts["activation"],
                                         init='normal',
                                         border_mode='valid',
                                         W_regularizer=l2(0.001),
                                         b_regularizer=l2(0.001)))
+                elif opts["layer"] == "Embedding":
+                    mdl.add(Embedding(
+                        output_dim=opts["output_dim"],
+                        init='normal',
+                        input_dim=opts["input_dim"],
+                        W_regularizer=l2(0.001)
+                    ))
+                elif opts["layer"] == "LSTM":
+                    mdl.add(LSTM(output_dim=opts["output_dim"],
+                                    init='normal',
+                                    input_dim=opts["input_dim"],
+                                    activation= opts["activation"],
+                                    inner_activation = opts["inner_activation"],
+                                    W_regularizer=l2(0.001),
+                                    b_regularizer=l2(0.001)))
 
-            elif opts["layer"] == "Leaky":
-                mdl.add(Activation(LeakyReLU(alpha=0.1)))
-            elif opts["layer"] == "Flatten":
-                mdl.add(Flatten())
-            elif opts["layer"] == "LSTM":
-                mdl.add(LSTM(output_dim=opts["output_dim"],
-                                init='normal',
-                                activation= opts["activation"],
-                                inner_activation = opts["inner_activation"],
-                                W_regularizer=l2(0.001),
-                                b_regularizer=l2(0.001)))
+                start = False
 
-        logging.info("Layer: " + opts["layer"] + " shape={0}".format(mdl.output_shape))
+            else:
+                if opts["layer"] == "Dense":
+                    mdl.add(Dense(output_dim=opts["output_dim"],
+                                    init='normal',
+                                    activation= opts["activation"],
+                                    W_regularizer=l2(0.001),
+                                    b_regularizer=l2(0.001)))
+
+                elif opts["layer"] == "MaxPool":
+                    mdl.add(MaxPooling2D(pool_size=[1,opts["pool_length"]],
+                                           dim_ordering='th',
+                                           strides=None,
+                                           border_mode='valid'))
+
+                elif opts["layer"] == "DropOut":
+                    mdl.add(Dropout(p=opts["p"]))
+
+                elif opts["layer"] == "Conv":
+                    mdl.add(Convolution2D(nb_filter=opts["nb_filter"],
+                                            nb_row=1,
+                                            nb_col=opts["nb_col"],
+                                            subsample=[1,opts["subsample_length"]],
+                                            dim_ordering='th',
+                                            activation= opts["activation"],
+                                            init='normal',
+                                            border_mode='valid',
+                                            W_regularizer=l2(0.001),
+                                            b_regularizer=l2(0.001)))
+
+                elif opts["layer"] == "Leaky":
+                    mdl.add(Activation(LeakyReLU(alpha=0.1)))
+                elif opts["layer"] == "Flatten":
+                    mdl.add(Flatten())
+                elif opts["layer"] == "LSTM":
+                    mdl.add(LSTM(output_dim=opts["output_dim"],
+                                    init='normal',
+                                    activation= opts["activation"],
+                                    inner_activation = opts["inner_activation"],
+                                    W_regularizer=l2(0.001),
+                                    b_regularizer=l2(0.001)))
+
+            logging.info("Layer: " + opts["layer"] + " shape={0}".format(mdl.output_shape))
 
 
 
 
-    mdl.add(Activation("softmax"))
+        mdl.add(Activation("softmax"))
 
-    mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
-    #mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
+        mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
+        #mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
 
-    logging.info("compiled model {0}".format(mdl_cfg["name"]))
+        logging.info("compiled model {0}".format(mdl_cfg["name"]))
 
-    mdl.fit(x=features_train,
-              y=labels_train,
-              nb_epoch=nb_epoch,
-              batch_size=batch_size,
-              shuffle=True,
-              verbose=1)
-    logging.info("fit model {0}".format(mdl_cfg["name"]))
+        mdl.fit(x=features_train,
+                  y=labels_train,
+                  nb_epoch=nb_epoch,
+                  batch_size=batch_size,
+                  shuffle=True,
+                  verbose=1)
+        logging.info("fit model {0}".format(mdl_cfg["name"]))
 
-    #mdl.load_weights(filepath="/home/tg/Projects/LIS/weights_net2")
-    #logging.info("load weights from {0}".format("/home/tg/Projects/LIS/weights_net2"))
+        #mdl.load_weights(filepath="/home/tg/Projects/LIS/weights_net2")
+        #logging.info("load weights from {0}".format("/home/tg/Projects/LIS/weights_net2"))
 
-    mdl.save_weights("/home/tg/Projects/LIS/Data/pr3/weights_" + mdl_cfg["name"] + "_{0}.h5".format(datetime.datetime.now()) , overwrite=False)
-    logging.info("save weights as {0}".format("weights_" + mdl_cfg["name"] + "_{0}.h5".format(datetime.datetime.now())))
+        mdl.save_weights("/home/tg/Projects/LIS/Data/pr3/weights_" + mdl_cfg["name"] + "_{0}.h5".format(datetime.datetime.now()) , overwrite=False)
+        logging.info("save weights as {0}".format("weights_" + mdl_cfg["name"] + "_{0}.h5".format(datetime.datetime.now())))
 
-    score = mdl.evaluate(features_valid, labels_valid, batch_size= 32, verbose = 1)
-    logging.info("test model {0} scored {1}".format(mdl_cfg["name"],score))
+        score = mdl.evaluate(features_valid, labels_valid, batch_size= 32, verbose = 1)
+        logging.info("test model {0} scored {1}".format(mdl_cfg["name"],score))
 
-    labels_test = mdl.predict_classes(features_test, batch_size = 32, verbose = 1)
-    # print(labels_test.shape)
-    # print(labels_test[0:10])
-    # labels_test_tmp = np.zeros([labels_test[0],],dtype=np.uint8)
-    # for it in range(0,labels_test_tmp.shape[0]):
-    #     for n in range(0,5):
-    #         if labels_test[it,n] == 1:
-    #             labels_test_tmp[it] = n
-    # labels_test = labels_test_tmp
-    # print(labels_test.shape)
-    lib_IO.write_Y("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0}.csv".format(datetime.datetime.now()), Y_pred=labels_test, Ids=ids_test)
-    logging.info("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + ".csv")
+        labels_test = mdl.predict_classes(features_test, batch_size = 32, verbose = 1)
+        # print(labels_test.shape)
+        # print(labels_test[0:10])
+        # labels_test_tmp = np.zeros([labels_test[0],],dtype=np.uint8)
+        # for it in range(0,labels_test_tmp.shape[0]):
+        #     for n in range(0,5):
+        #         if labels_test[it,n] == 1:
+        #             labels_test_tmp[it] = n
+        # labels_test = labels_test_tmp
+        # print(labels_test.shape)
+        lib_IO.write_Y("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0}.csv".format(datetime.datetime.now()), Y_pred=labels_test, Ids=ids_test)
+        logging.info("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + ".csv")

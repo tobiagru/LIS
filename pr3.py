@@ -196,9 +196,9 @@ for type in ["MLP",]:
                     #Dense & Conv
                     "activation": activation,
                     },
-                    {
+                    #{
                     #"layer": "DropOut",
-                    #Dropout
+                    ##Dropout
                     #"p": 0.4,
                     #},
                     {

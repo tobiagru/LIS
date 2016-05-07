@@ -22,6 +22,8 @@ from keras.regularizers import l2
 
 from keras.optimizers import SGD
 
+from sklearn.decomposition import PCA
+
 lr = float(sys.argv[1])
 lr_dc = float(sys.argv[2])
 nr = int(sys.argv[3])
@@ -55,6 +57,10 @@ feat = openfile["train/block0_values"]
 features = np.zeros(feat.shape, dtype=np.float32)
 feat.read_direct(features)
 
+pca = PCA(n_components='mle')
+pca.fit_transform(features)
+print("features shape {0}".format(features.shape))
+
 i = openfile["train/axis1"]
 ids = np.zeros(i.shape, dtype=np.uint32)
 i.read_direct(ids)
@@ -68,6 +74,8 @@ openfile = h5py.File(fname_test)
 feat_test = openfile["test/block0_values"]
 features_test = np.zeros(feat_test.shape, dtype=np.float32)
 feat_test.read_direct(features_test)
+
+pca.transform(features_test)
 
 i_test = openfile["test/axis1"]
 ids_test = np.zeros(i_test.shape, dtype=np.uint32)

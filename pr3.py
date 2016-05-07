@@ -23,8 +23,10 @@ from keras.regularizers import l2
 from keras.optimizers import SGD
 
 lr = float(sys.argv[1])
-nr = int(sys.argv[2])
-p = float(sys.argv[3])
+lr_dc = float(sys.argv[2])
+nr = int(sys.argv[3])
+p = float(sys.argv[4])
+n_lay = float(sys.argv[5])
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -98,7 +100,7 @@ batch_size = 120
 
 lr_rtes = [lr,]
 momentum = 0.9
-lr_decay = 0.00001
+lr_decay = lr_dc
 nestrove = False
 nb_neurons = {"MLP":[nr,],
                 "LSTM":[100,200,400,800],}
@@ -148,93 +150,30 @@ for type in ["MLP",]:
                     #Dense & Conv
                     "activation": activation,
                     "input_dim": 100
-                    },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": p,
-                    },
-                    {
-                    "layer": "Dense",
-                    #Dense
-                    "output_dim": nb_neuron,
-                    #Dense & Conv
-                    "activation": activation,
-                    },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": p,
-                    },
-                    {
-                    "layer": "Dense",
-                    #Dense
-                    "output_dim": nb_neuron,
-                    #Dense & Conv
-                    "activation": activation,
-                    },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": p,
-                    },
-                    {
-                    "layer": "Dense",
-                    #Dense
-                    "output_dim": nb_neuron,
-                    #Dense & Conv
-                    "activation": activation,
-                    },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": p,
-                    },
-                    {
-                    "layer": "Dense",
-                    #Dense
-                    "output_dim": nb_neuron,
-                    #Dense & Conv
-                    "activation": activation,
-                    },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": p,
-                    },
-                    {
-                    "layer": "Dense",
-                    #Dense
-                    "output_dim": nb_neuron,
-                    #Dense & Conv
-                    "activation": activation,
-                    },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": p,
-                    },
-                    {
-                    "layer": "Dense",
-                    #Dense
-                    "output_dim": nb_neuron,
-                    #Dense & Conv
-                    "activation": activation,
-                    },
-                    #{
-                    #"layer": "DropOut",
-                    ##Dropout
-                    #"p": p,
-                    #},
-                    {
+                    },]
+                for it in range(0,n_lay):
+                    optsMLP.append({
+                        "layer": "DropOut",
+                        #Dropout
+                        "p": p,
+                        },)
+                    optsMLP.append({
+                        "layer": "Dense",
+                        #Dense
+                        "output_dim": nb_neuron,
+                        #Dense & Conv
+                        "activation": activation,
+                        })
+
+                optsMLP.append({
                     "layer": "Dense",
                     #Dense
                     "output_dim": num_classes,
                     #"output_dim": 1,
                     #Dense & Conv
                     "activation": "linear",
-                    },
-                ]
+                    })
+
                 mdl_cfgs.append({"name": "MLP1_{0}_{1}".format(nb_neuron,activation), "opts": optsMLP})
                 print("MLP - neurons: {0} - activation: {1}".format(nb_neuron,activation))
 

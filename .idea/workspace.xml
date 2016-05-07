@@ -27,8 +27,8 @@
       <file leaf-file-name="pr3.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pr3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7163515">
-              <caret line="210" column="22" selection-start-line="210" selection-start-column="22" selection-end-line="210" selection-end-column="22" />
+            <state vertical-scroll-proportion="2.7697442">
+              <caret line="166" column="16" selection-start-line="166" selection-start-column="16" selection-end-line="166" selection-end-column="16" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -437,7 +437,19 @@
       <option name="project" value="LOCAL" />
       <updated>1462620484275</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="...">
+      <created>1462620749111</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1462620749111</updated>
+    </task>
+    <task id="LOCAL-00021" summary="...">
+      <created>1462621108771</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1462621108771</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TodoView">
@@ -882,8 +894,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pr3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7163515">
-          <caret line="210" column="22" selection-start-line="210" selection-start-column="22" selection-end-line="210" selection-end-column="22" />
+        <state vertical-scroll-proportion="2.7697442">
+          <caret line="166" column="16" selection-start-line="166" selection-start-column="16" selection-end-line="166" selection-end-column="16" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

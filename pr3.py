@@ -22,8 +22,8 @@ from keras.regularizers import l2
 
 from keras.optimizers import SGD
 
-lr = sys.argv[1]
-nr = sys.argv[2]
+lr = float(sys.argv[1])
+nr = int(sys.argv[2])
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 

@@ -143,28 +143,16 @@ for type in ["MLP",]:
                     {
                     "layer": "Dense",
                     #Dense
-                    "output_dim": int(nb_neuron*2),
+                    "output_dim": nb_neuron,
                     #Dense & Conv
                     "activation": activation,
                     "input_dim": 100
                     },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": 0.5,
-                    },
-                    {
-                    "layer": "Dense",
-                    #Dense
-                    "output_dim": nb_neuron,
-                    #Dense & Conv
-                    "activation": activation,
-                    },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": 0.4,
-                    },
+                    #{
+                    #"layer": "DropOut",
+                    ##Dropout
+                    #"p": 0.5,
+                    #},
                     {
                     "layer": "Dense",
                     #Dense
@@ -172,11 +160,11 @@ for type in ["MLP",]:
                     #Dense & Conv
                     "activation": activation,
                     },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": 0.4,
-                    },
+                    #{
+                    #"layer": "DropOut",
+                    ##Dropout
+                    #"p": 0.4,
+                    #},
                     {
                     "layer": "Dense",
                     #Dense
@@ -184,11 +172,11 @@ for type in ["MLP",]:
                     #Dense & Conv
                     "activation": activation,
                     },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": 0.4,
-                    },
+                    #{
+                    #"layer": "DropOut",
+                    ##Dropout
+                    #"p": 0.4,
+                    #},
                     {
                     "layer": "Dense",
                     #Dense

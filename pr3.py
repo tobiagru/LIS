@@ -160,11 +160,11 @@ for type in ["MLP",]:
                     #Dense & Conv
                     "activation": activation,
                     },
-                    #{
-                    #"layer": "DropOut",
-                    ##Dropout
-                    #"p": 0.4,
-                    #},
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.4,
+                    },
                     {
                     "layer": "Dense",
                     #Dense
@@ -196,11 +196,11 @@ for type in ["MLP",]:
                     #Dense & Conv
                     "activation": activation,
                     },
-                    #{
-                    #"layer": "DropOut",
-                    ##Dropout
-                    #"p": 0.4,
-                    #},
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.4,
+                    },
                     {
                     "layer": "Dense",
                     #Dense
@@ -323,8 +323,8 @@ for lr_rte in lr_rtes:
 
         mdl.add(Activation("softmax"))
 
-        #mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
-        mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
+        mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
+        #mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
 
         logging.info("compiled model {0}".format(mdl_cfg["name"]))
 

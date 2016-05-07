@@ -24,12 +24,12 @@ from keras.optimizers import SGD
 
 from sklearn.decomposition import PCA
 
-lr = float(sys.argv[1])
-lr_dc = float(sys.argv[2])
-nr = int(sys.argv[3])
-p = float(sys.argv[4])
-n_lay = int(sys.argv[5])
-n_epo = int(sys.argv[6])
+#lr = float(sys.argv[1])
+#lr_dc = float(sys.argv[2])
+#nr = int(sys.argv[3])
+#p = float(sys.argv[4])
+#n_lay = int(sys.argv[5])
+#n_epo = int(sys.argv[6])
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -110,11 +110,11 @@ batch_size = 120
 
 init = "normal"
 
-lr_rtes = [lr,]
+lr_rtes = [0.5, 0.1, 0.05, 0.01, 0.005, 0.001]
 momentum = 0.9
-lr_decay = lr_dc
+lr_decay = 0.0
 nestrove = False
-nb_neurons = {"MLP":[nr,],
+nb_neurons = {"MLP":[25, 50, 100, 200, 400, 800, 1600, 3200, 6400, 12800],
                 "LSTM":[100,200,400,800],}
 activations = {"MLP":["relu"],
                "LSTM":["relu","tanh","sigmoid"]}
@@ -163,19 +163,6 @@ for type in ["MLP",]:
                     "activation": activation,
                     "input_dim": 100
                     },]
-                for it in range(0,n_lay):
-                    optsMLP.append({
-                        "layer": "DropOut",
-                        #Dropout
-                        "p": p,
-                        },)
-                    optsMLP.append({
-                        "layer": "Dense",
-                        #Dense
-                        "output_dim": nb_neuron,
-                        #Dense & Conv
-                        "activation": activation,
-                        })
 
                 optsMLP.append({
                     "layer": "Dense",
@@ -183,7 +170,7 @@ for type in ["MLP",]:
                     "output_dim": num_classes,
                     #"output_dim": 1,
                     #Dense & Conv
-                    "activation": "linear",
+                    "activation": activation,
                     })
 
                 mdl_cfgs.append({"name": "MLP1_{0}_{1}".format(nb_neuron,activation), "opts": optsMLP})
@@ -192,7 +179,7 @@ for type in ["MLP",]:
 ###########################################
 for lr_rte in lr_rtes:
     #nb_epoch = int(-20 * math.log(lr_rte, 7))
-    nb_epoch = n_epo
+    nb_epoch = 40
     print("lr_rate: {0} -- nb_epochs; {1}".format(lr_rte,nb_epoch))
 
     optimizer = SGD(lr=lr_rte,momentum=momentum,decay = lr_decay,nesterov = nestrove)
@@ -297,7 +284,7 @@ for lr_rte in lr_rtes:
 
 
 
-        mdl.add(Activation("softmax"))
+        #mdl.add(Activation("softmax"))
 
         mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
         #mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])

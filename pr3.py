@@ -209,6 +209,18 @@ for type in ["MLP",]:
                     #Dense & Conv
                     "activation": activation,
                     },
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": p,
+                    },
+                    {
+                    "layer": "Dense",
+                    #Dense
+                    "output_dim": nb_neuron,
+                    #Dense & Conv
+                    "activation": activation,
+                    },
                     #{
                     #"layer": "DropOut",
                     ##Dropout

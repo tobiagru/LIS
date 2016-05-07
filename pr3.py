@@ -24,6 +24,7 @@ from keras.optimizers import SGD
 
 lr = float(sys.argv[1])
 nr = int(sys.argv[2])
+p = float(sys.argv[3])
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -151,7 +152,7 @@ for type in ["MLP",]:
                     {
                     "layer": "DropOut",
                     #Dropout
-                    "p": 0.5,
+                    "p": p,
                     },
                     {
                     "layer": "Dense",
@@ -163,7 +164,7 @@ for type in ["MLP",]:
                     #{
                     #"layer": "DropOut",
                     ##Dropout
-                    #"p": 0.4,
+                    #"p": p,
                     #},
                     {
                     "layer": "Dense",
@@ -171,7 +172,7 @@ for type in ["MLP",]:
                     "output_dim": num_classes,
                     #"output_dim": 1,
                     #Dense & Conv
-                    "activation": activation,
+                    "activation": "linear",
                     },
                 ]
                 mdl_cfgs.append({"name": "MLP1_{0}_{1}".format(nb_neuron,activation), "opts": optsMLP})

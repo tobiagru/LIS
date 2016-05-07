@@ -23,12 +23,12 @@ from keras.regularizers import l2
 from keras.optimizers import SGD
 
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout,filename="/home/ubuntu/LIS/pr3.log", filemode="w+", level=logging.DEBUG)
 
 ###########################
-fname_train = "/home/tg/Projects/LIS/Data/pr3/train.h5"
+fname_train = "/home/ubuntu/LIS/Data/pr3/train.h5"
 
-fname_test = "/home/tg/Projects/LIS/Data/pr3/test.h5"
+fname_test = "/home/ubuntu/LIS/Data/pr3/test.h5"
 
 ###############
 
@@ -105,6 +105,7 @@ activations = {"MLP":["relu","tanh","sigmoid"],
                "LSTM":["relu","tanh","sigmoid"]}
 mdl_cfgs = list()
 
+scores = list()
 
 for type in ["MLP", "LSTM"]:
     for nb_neuron in nb_neurons[type]:
@@ -302,8 +303,10 @@ for lr_rte in lr_rtes:
         #mdl.load_weights(filepath="/home/tg/Projects/LIS/weights_net2")
         #logging.info("load weights from {0}".format("/home/tg/Projects/LIS/weights_net2"))
 
-        mdl.save_weights("/home/tg/Projects/LIS/Data/pr3/weights_" + mdl_cfg["name"] + "_{0}.h5".format(datetime.datetime.now()) , overwrite=False)
-        logging.info("save weights as {0}".format("weights_" + mdl_cfg["name"] + "_{0}.h5".format(datetime.datetime.now())))
+        time_now = datetime.datetime.now()
+
+        mdl.save_weights("/home/ubuntu/LIS/Data/pr3/weights_" + mdl_cfg["name"] + "_{0}.h5".format(time_now) , overwrite=False)
+        logging.info("save weights as {0}".format("weights_" + mdl_cfg["name"] + "_{0}.h5".format(time_now)))
 
         score = mdl.evaluate(features_valid, labels_valid, batch_size= 32, verbose = 1)
         logging.info("test model {0} scored {1}".format(mdl_cfg["name"],score))
@@ -318,5 +321,6 @@ for lr_rte in lr_rtes:
         #             labels_test_tmp[it] = n
         # labels_test = labels_test_tmp
         # print(labels_test.shape)
-        lib_IO.write_Y("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0:.4f}.csv".format(score[1]), Y_pred=labels_test, Ids=ids_test)
-        logging.info("/home/tg/Projects/LIS/Data/pr3/" + mdl_cfg["name"] + ".csv")
+        scores.append(mdl_cfg["name"] + "_{0}   \t\t\t score: {1}".format(time_now,score))
+        lib_IO.write_Y("/home/ubuntu/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0}.csv".format(time_now), Y_pred=labels_test, Ids=ids_test)
+        logging.info("/home/ubuntu/LIS/Data/pr3/" + mdl_cfg["name"] + + "_{0}.csv".format(time_now))

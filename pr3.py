@@ -332,6 +332,6 @@ for lr_rte in lr_rtes:
         # labels_test = labels_test_tmp
         # print(labels_test.shape)
         scores.append(mdl_cfg["name"] + "_{0}_{1} -- score: {2}".format(lr_rte,time_now,score))
-        lib_IO.write_Y("/home/ubuntu/LIS/Data/pr3/{0}_".format(time_now) + mdl_cfg["name"] + "_{0}.csv".format(lr_rte), Y_pred=labels_test, Ids=ids_test)
-        logging.info("/home/ubuntu/LIS/Data/pr3/{0}_".format(time_now) + mdl_cfg["name"] + "_{0}.csv".format(lr_rte))
+        lib_IO.write_Y("/home/ubuntu/LIS/Data/pr3/_{0}_".format(time_now) + mdl_cfg["name"] + "_{0}.csv".format(lr_rte), Y_pred=labels_test, Ids=ids_test)
+        logging.info("/home/ubuntu/LIS/Data/pr3/_{0}_".format(time_now) + mdl_cfg["name"] + "_{0}.csv".format(lr_rte))
 print(scores)

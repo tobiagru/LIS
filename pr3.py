@@ -23,7 +23,7 @@ from keras.regularizers import l2
 from keras.optimizers import SGD
 
 
-logging.basicConfig(stream=sys.stdout,filename="/home/ubuntu/LIS/pr3.log", filemode="w+", level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 ###########################
 fname_train = "/home/ubuntu/LIS/Data/pr3/train.h5"
@@ -93,11 +93,11 @@ def objective(self, y_true, y_pred):
 
 batch_size = 120
 
-lr_rtes = [0.2, 0.3, 0.1, 0.07]
+lr_rtes = [0.4, 0.3, 0.2,]
 momentum = 0.9
 lr_decay = 0.0001
 nestrove = False
-nb_neurons = {"MLP":[400,800,1600,3200],
+nb_neurons = {"MLP":[400,800],
                 "LSTM":[100,200,400,800],}
 activations = {"MLP":["relu"],
                "LSTM":["relu","tanh","sigmoid"]}
@@ -178,13 +178,25 @@ for type in ["MLP",]:
                     {
                     "layer": "Dense",
                     #Dense
+                    "output_dim": int(nb_neuron/4),
+                    #Dense & Conv
+                    "activation": activation,
+                    },
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.3,
+                    },
+                    {
+                    "layer": "Dense",
+                    #Dense
                     "output_dim": num_classes,
                     #"output_dim": 1,
                     #Dense & Conv
                     "activation": activation,
                     },
                 ]
-                mdl_cfgs.append({"name": "MLP1", "opts": optsMLP})
+                mdl_cfgs.append({"name": "MLP1_{0}_{1}".format(nb_neuron,activation), "opts": optsMLP})
                 print("MLP - neurons: {0} - activation: {1}".format(nb_neuron,activation))
 
 ###########################################
@@ -332,6 +344,6 @@ for lr_rte in lr_rtes:
         # labels_test = labels_test_tmp
         # print(labels_test.shape)
         scores.append(mdl_cfg["name"] + "_{0}_{1} -- score: {2}".format(lr_rte,time_now,score))
-        lib_IO.write_Y("/home/ubuntu/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0}.csv".format(time_now), Y_pred=labels_test, Ids=ids_test)
-        logging.info("/home/ubuntu/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0}.csv".format(time_now))
+        lib_IO.write_Y("/home/ubuntu/LIS/Data/pr3/{0}_".format(time_now) + mdl_cfg["name"] + "_{0}.csv".format(lr_rte), Y_pred=labels_test, Ids=ids_test)
+        logging.info("/home/ubuntu/LIS/Data/pr3/{0}_".format(time_now) + mdl_cfg["name"] + "_{0}.csv".format(lr_rte))
 print(scores)

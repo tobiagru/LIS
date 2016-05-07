@@ -93,7 +93,7 @@ def objective(self, y_true, y_pred):
 
 batch_size = 120
 
-lr_rtes = [0.01, 0.001]
+lr_rtes = [0.1, 0.2]
 momentum = 0.9
 lr_decay = 0.00001
 nestrove = False
@@ -155,6 +155,18 @@ for type in ["MLP",]:
                     "layer": "Dense",
                     #Dense
                     "output_dim": int(nb_neuron*2),
+                    #Dense & Conv
+                    "activation": activation,
+                    },
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.5,
+                    },
+                    {
+                    "layer": "Dense",
+                    #Dense
+                    "output_dim": nb_neuron,
                     #Dense & Conv
                     "activation": activation,
                     },
@@ -309,8 +321,8 @@ for lr_rte in lr_rtes:
 
         mdl.add(Activation("softmax"))
 
-        #mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
-        mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
+        mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
+        #mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
 
         logging.info("compiled model {0}".format(mdl_cfg["name"]))
 

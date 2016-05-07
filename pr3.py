@@ -148,47 +148,11 @@ for type in ["MLP",]:
                     "activation": activation,
                     "input_dim": 100
                     },
-                    #{
-                    #"layer": "DropOut",
-                    ##Dropout
-                    #"p": 0.5,
-                    #},
-                    {
-                    "layer": "Dense",
-                    #Dense
-                    "output_dim": nb_neuron,
-                    #Dense & Conv
-                    "activation": activation,
-                    },
-                    #{
-                    #"layer": "DropOut",
-                    ##Dropout
-                    #"p": 0.4,
-                    #},
-                    {
-                    "layer": "Dense",
-                    #Dense
-                    "output_dim": nb_neuron,
-                    #Dense & Conv
-                    "activation": activation,
-                    },
                     {
                     "layer": "DropOut",
                     #Dropout
-                    "p": 0.4,
+                    "p": 0.5,
                     },
-                    {
-                    "layer": "Dense",
-                    #Dense
-                    "output_dim": nb_neuron,
-                    #Dense & Conv
-                    "activation": activation,
-                    },
-                    #{
-                    #"layer": "DropOut",
-                    ##Dropout
-                    #"p": 0.4,
-                    #},
                     {
                     "layer": "Dense",
                     #Dense

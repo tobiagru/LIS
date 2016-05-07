@@ -95,7 +95,7 @@ batch_size = 120
 
 lr_rtes = [0.1, 0.05, 0.01, 0.005, 0.001, 0.0005]
 momentum = 0.9
-lr_decay = 0.0001
+lr_decay = 0.00001
 nestrove = False
 nb_neurons = {"MLP":[100,200,400,800,1600],
                 "LSTM":[100,200,400,800],}

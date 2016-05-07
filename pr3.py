@@ -99,7 +99,7 @@ def objective(self, y_true, y_pred):
 
 batch_size = 120
 
-init = "uniform"
+init = "normal"
 
 lr_rtes = [lr,]
 momentum = 0.9

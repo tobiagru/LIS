@@ -22,6 +22,8 @@ from keras.regularizers import l2
 
 from keras.optimizers import SGD
 
+lr = sys.argv[1]
+nr = sys.argv[2]
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -93,11 +95,11 @@ def objective(self, y_true, y_pred):
 
 batch_size = 120
 
-lr_rtes = [0.2, 0.1, 0.05]
+lr_rtes = lr
 momentum = 0.9
 lr_decay = 0.00001
 nestrove = False
-nb_neurons = {"MLP":[800],
+nb_neurons = {"MLP":[nr,],
                 "LSTM":[100,200,400,800],}
 activations = {"MLP":["relu"],
                "LSTM":["relu","tanh","sigmoid"]}
@@ -343,7 +345,7 @@ for lr_rte in lr_rtes:
         #             labels_test_tmp[it] = n
         # labels_test = labels_test_tmp
         # print(labels_test.shape)
-        scores.append(mdl_cfg["name"] + "_{0}_{1} -- score: {2}".format(lr_rte,time_now,score))
+        scores.append(mdl_cfg["name"] + "_{0}_{1} -- score: {2}".format(lr_rte,time_now,score[1]))
         lib_IO.write_Y("/home/ubuntu/LIS/Data/pr3/_{0}_".format(time_now) + mdl_cfg["name"] + "_{0}.csv".format(lr_rte), Y_pred=labels_test, Ids=ids_test)
         logging.info("/home/ubuntu/LIS/Data/pr3/_{0}_".format(time_now) + mdl_cfg["name"] + "_{0}.csv".format(lr_rte))
 print(scores)

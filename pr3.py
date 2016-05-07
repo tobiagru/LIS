@@ -148,11 +148,11 @@ for type in ["MLP",]:
                     "activation": activation,
                     "input_dim": 100
                     },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": 0.5,
-                    },
+                    #{
+                    #"layer": "DropOut",
+                    ##Dropout
+                    #"p": 0.5,
+                    #},
                     {
                     "layer": "Dense",
                     #Dense

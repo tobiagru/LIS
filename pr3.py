@@ -58,7 +58,8 @@ features = np.zeros(feat.shape, dtype=np.float32)
 feat.read_direct(features)
 
 pca = PCA(n_components='mle')
-pca.fit_transform(features)
+pca.fit(features)
+pca.transform(features)
 print("features shape {0}".format(features.shape))
 
 i = openfile["train/axis1"]

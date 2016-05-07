@@ -27,8 +27,8 @@
       <file leaf-file-name="pr3.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pr3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.71746385">
-              <caret line="202" column="20" selection-start-line="202" selection-start-column="20" selection-end-line="202" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.6674082">
+              <caret line="178" column="20" selection-start-line="178" selection-start-column="20" selection-end-line="178" selection-end-column="20" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -401,7 +401,13 @@
       <option name="project" value="LOCAL" />
       <updated>1462618953858</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="...">
+      <created>1462619171772</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1462619171772</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TodoView">
@@ -846,8 +852,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pr3.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71746385">
-          <caret line="202" column="20" selection-start-line="202" selection-start-column="20" selection-end-line="202" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.6674082">
+          <caret line="178" column="20" selection-start-line="178" selection-start-column="20" selection-end-line="178" selection-end-column="20" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

@@ -71,8 +71,6 @@ feat_test = openfile["test/block0_values"]
 features_test = np.zeros(feat_test.shape, dtype=np.float32)
 feat_test.read_direct(features_test)
 
-pca.transform(features_test)
-
 i_test = openfile["test/axis1"]
 ids_test = np.zeros(i_test.shape, dtype=np.uint32)
 i_test.read_direct(ids_test)

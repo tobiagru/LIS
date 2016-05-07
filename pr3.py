@@ -57,11 +57,6 @@ feat = openfile["train/block0_values"]
 features = np.zeros(feat.shape, dtype=np.float32)
 feat.read_direct(features)
 
-pca = PCA(n_components='mle')
-pca.fit(features)
-pca.transform(features)
-print("features shape {0}".format(features.shape))
-
 i = openfile["train/axis1"]
 ids = np.zeros(i.shape, dtype=np.uint32)
 i.read_direct(ids)

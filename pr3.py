@@ -189,7 +189,8 @@ for type in ["MLP",]:
 
 ###########################################
 for lr_rte in lr_rtes:
-    nb_epoch = int(-20 * math.log(lr_rte, 7))
+    #nb_epoch = int(-20 * math.log(lr_rte, 7))
+    nb_epoch = 30
     print("lr_rate: {0} -- nb_epochs; {1}".format(lr_rte,nb_epoch))
 
     optimizer = SGD(lr=lr_rte,momentum=momentum,decay = lr_decay,nesterov = nestrove)

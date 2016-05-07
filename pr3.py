@@ -30,6 +30,11 @@ fname_train = "/home/ubuntu/LIS/Data/pr3/train.h5"
 
 fname_test = "/home/ubuntu/LIS/Data/pr3/test.h5"
 
+num_classes = 5
+#num_classes = 1
+
+classes = [0,1,2,3,4]
+
 ###############
 
 logging.info("Loading dataset '{0}'".format(fname_train))
@@ -87,13 +92,6 @@ def objective(self, y_true, y_pred):
 
 
 batch_size = 120
-
-num_classes = 5
-#num_classes = 1
-
-classes = [0,1,2,3,4]
-
-
 
 lr_rtes = [0.1, 0.05, 0.01, 0.005, 0.001, 0.0005]
 momentum = 0.9
@@ -206,8 +204,9 @@ for lr_rte in lr_rtes:
                                 init='normal',
                                 input_dim=opts["input_dim"],
                                 activation= opts["activation"],
-                                W_regularizer=l2(0.001),
-                                b_regularizer=l2(0.001)))
+                                #W_regularizer=l2(0.001),
+                                #b_regularizer=l2(0.001)
+                                  ))
 
                 elif opts["layer"] == "Conv":
                     mdl.add(Convolution2D(nb_filter=opts["nb_filter"],
@@ -219,14 +218,15 @@ for lr_rte in lr_rtes:
                                         activation= opts["activation"],
                                         init='normal',
                                         border_mode='valid',
-                                        W_regularizer=l2(0.001),
-                                        b_regularizer=l2(0.001)))
+                                        #W_regularizer=l2(0.001),
+                                        #b_regularizer=l2(0.001)
+                                    ))
                 elif opts["layer"] == "Embedding":
                     mdl.add(Embedding(
                         output_dim=opts["output_dim"],
                         init='normal',
                         input_dim=opts["input_dim"],
-                        W_regularizer=l2(0.001)
+                        #W_regularizer=l2(0.001)
                     ))
                 elif opts["layer"] == "LSTM":
                     mdl.add(LSTM(output_dim=opts["output_dim"],
@@ -234,8 +234,9 @@ for lr_rte in lr_rtes:
                                     input_dim=opts["input_dim"],
                                     activation= opts["activation"],
                                     inner_activation = opts["inner_activation"],
-                                    W_regularizer=l2(0.001),
-                                    b_regularizer=l2(0.001)))
+                                    #W_regularizer=l2(0.001),
+                                    #b_regularizer=l2(0.001)
+                                 ))
 
                 start = False
 
@@ -244,8 +245,9 @@ for lr_rte in lr_rtes:
                     mdl.add(Dense(output_dim=opts["output_dim"],
                                     init='normal',
                                     activation= opts["activation"],
-                                    W_regularizer=l2(0.001),
-                                    b_regularizer=l2(0.001)))
+                                    #W_regularizer=l2(0.001),
+                                    #b_regularizer=l2(0.001)
+                                  ))
 
                 elif opts["layer"] == "MaxPool":
                     mdl.add(MaxPooling2D(pool_size=[1,opts["pool_length"]],
@@ -265,8 +267,9 @@ for lr_rte in lr_rtes:
                                             activation= opts["activation"],
                                             init='normal',
                                             border_mode='valid',
-                                            W_regularizer=l2(0.001),
-                                            b_regularizer=l2(0.001)))
+                                            #W_regularizer=l2(0.001),
+                                            #b_regularizer=l2(0.001)
+                                          ))
 
                 elif opts["layer"] == "Leaky":
                     mdl.add(Activation(LeakyReLU(alpha=0.1)))
@@ -277,8 +280,9 @@ for lr_rte in lr_rtes:
                                     init='normal',
                                     activation= opts["activation"],
                                     inner_activation = opts["inner_activation"],
-                                    W_regularizer=l2(0.001),
-                                    b_regularizer=l2(0.001)))
+                                    #W_regularizer=l2(0.001),
+                                    #b_regularizer=l2(0.001)
+                                 ))
 
             logging.info("Layer: " + opts["layer"] + " shape={0}".format(mdl.output_shape))
 
@@ -324,3 +328,4 @@ for lr_rte in lr_rtes:
         scores.append(mdl_cfg["name"] + "_{0}   \t\t\t score: {1}".format(time_now,score))
         lib_IO.write_Y("/home/ubuntu/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0}.csv".format(time_now), Y_pred=labels_test, Ids=ids_test)
         logging.info("/home/ubuntu/LIS/Data/pr3/" + mdl_cfg["name"] + + "_{0}.csv".format(time_now))
+print(scores)

@@ -93,11 +93,11 @@ def objective(self, y_true, y_pred):
 
 batch_size = 120
 
-lr_rtes = [0.4, 0.3, 0.2,]
+lr_rtes = [0.5, 0.4, 0.3, 0.2,]
 momentum = 0.9
-lr_decay = 0.0001
+lr_decay = 0.0
 nestrove = False
-nb_neurons = {"MLP":[400,800],
+nb_neurons = {"MLP":[800],
                 "LSTM":[100,200,400,800],}
 activations = {"MLP":["relu"],
                "LSTM":["relu","tanh","sigmoid"]}
@@ -141,6 +141,18 @@ for type in ["MLP",]:
                     {
                     "layer": "Dense",
                     #Dense
+                    "output_dim": nb_neuron,
+                    #Dense & Conv
+                    "activation": activation,
+                    },
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.4,
+                    },
+                    {
+                    "layer": "Dense",
+                    #Dense
                     "output_dim": int(nb_neuron*2),
                     #Dense & Conv
                     "activation": activation,
@@ -149,7 +161,7 @@ for type in ["MLP",]:
                     {
                     "layer": "DropOut",
                     #Dropout
-                    "p": 0.4,
+                    "p": 0.5,
                     },
                     {
                     "layer": "Dense",
@@ -190,7 +202,7 @@ for type in ["MLP",]:
 ###########################################
 for lr_rte in lr_rtes:
     #nb_epoch = int(-20 * math.log(lr_rte, 7))
-    nb_epoch = 30
+    nb_epoch = 40
     print("lr_rate: {0} -- nb_epochs; {1}".format(lr_rte,nb_epoch))
 
     optimizer = SGD(lr=lr_rte,momentum=momentum,decay = lr_decay,nesterov = nestrove)

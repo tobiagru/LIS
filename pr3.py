@@ -30,8 +30,8 @@ fname_train = "/home/ubuntu/LIS/Data/pr3/train.h5"
 
 fname_test = "/home/ubuntu/LIS/Data/pr3/test.h5"
 
-num_classes = 5
-#num_classes = 1
+#num_classes = 5
+num_classes = 1
 
 classes = [0,1,2,3,4]
 
@@ -43,7 +43,7 @@ openfile = h5py.File(fname_train)
 lab = openfile["train/block1_values"]
 labels = np.zeros(lab.shape, dtype=np.uint8)
 lab.read_direct(labels)
-labels = label_binarize(labels, classes)
+#labels = label_binarize(labels, classes)
 
 feat = openfile["train/block0_values"]
 features = np.zeros(feat.shape, dtype=np.float32)
@@ -93,7 +93,7 @@ def objective(self, y_true, y_pred):
 
 batch_size = 120
 
-lr_rtes = [0.4, 0.3, 0.2,]
+lr_rtes = [0.4, 0.3, 0.2]
 momentum = 0.9
 lr_decay = 0.0001
 nestrove = False
@@ -141,7 +141,7 @@ for type in ["MLP",]:
                     {
                     "layer": "Dense",
                     #Dense
-                    "output_dim": nb_neuron,
+                    "output_dim": int(nb_neuron*2),
                     #Dense & Conv
                     "activation": activation,
                     "input_dim": 100
@@ -149,7 +149,7 @@ for type in ["MLP",]:
                     {
                     "layer": "DropOut",
                     #Dropout
-                    "p": 0.4,
+                    "p": 0.5,
                     },
                     {
                     "layer": "Dense",

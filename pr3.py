@@ -93,19 +93,19 @@ def objective(self, y_true, y_pred):
 
 batch_size = 120
 
-lr_rtes = [0.1, 0.05, 0.01, 0.005, 0.001]
+lr_rtes = [0.2, 0.3, 0.1, 0.07]
 momentum = 0.9
 lr_decay = 0.0001
 nestrove = False
-nb_neurons = {"MLP":[100,200,400,800,1600],
+nb_neurons = {"MLP":[400,800,1600,3200],
                 "LSTM":[100,200,400,800],}
-activations = {"MLP":["relu","tanh","sigmoid"],
+activations = {"MLP":["relu"],
                "LSTM":["relu","tanh","sigmoid"]}
 mdl_cfgs = list()
 
 scores = list()
 
-for type in ["MLP", "LSTM"]:
+for type in ["MLP",]:
     for nb_neuron in nb_neurons[type]:
         for activation in activations[type]:
             if type == "LSTM":
@@ -143,8 +143,13 @@ for type in ["MLP", "LSTM"]:
                     #Dense
                     "output_dim": int(nb_neuron*2),
                     #Dense & Conv
-                    "activation": "linear",
+                    "activation": activation,
                     "input_dim": 100
+                    },
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.4,
                     },
                     {
                     "layer": "Dense",
@@ -163,7 +168,12 @@ for type in ["MLP", "LSTM"]:
                     #Dense
                     "output_dim": int(nb_neuron/2),
                     #Dense & Conv
-                    "activation": "linear",
+                    "activation": activation,
+                    },
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.3,
                     },
                     {
                     "layer": "Dense",
@@ -172,11 +182,6 @@ for type in ["MLP", "LSTM"]:
                     #"output_dim": 1,
                     #Dense & Conv
                     "activation": activation,
-                    },
-                    {
-                    "layer": "DropOut",
-                    #Dropout
-                    "p": 0.3,
                     },
                 ]
                 mdl_cfgs.append({"name": "MLP1", "opts": optsMLP})
@@ -325,7 +330,7 @@ for lr_rte in lr_rtes:
         #             labels_test_tmp[it] = n
         # labels_test = labels_test_tmp
         # print(labels_test.shape)
-        scores.append(mdl_cfg["name"] + "_{0}   \t\t\t score: {1}".format(time_now,score))
+        scores.append(mdl_cfg["name"] + "_{0}_{1} -- score: {2}".format(lr_rte,time_now,score))
         lib_IO.write_Y("/home/ubuntu/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0}.csv".format(time_now), Y_pred=labels_test, Ids=ids_test)
-        logging.info("/home/ubuntu/LIS/Data/pr3/" + mdl_cfg["name"] + + "_{0}.csv".format(time_now))
+        logging.info("/home/ubuntu/LIS/Data/pr3/" + mdl_cfg["name"] + "_{0}.csv".format(time_now))
 print(scores)

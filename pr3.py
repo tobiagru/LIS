@@ -26,7 +26,7 @@ lr = float(sys.argv[1])
 lr_dc = float(sys.argv[2])
 nr = int(sys.argv[3])
 p = float(sys.argv[4])
-n_lay = float(sys.argv[5])
+n_lay = int(sys.argv[5])
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 

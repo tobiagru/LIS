@@ -30,8 +30,8 @@ fname_train = "/home/ubuntu/LIS/Data/pr3/train.h5"
 
 fname_test = "/home/ubuntu/LIS/Data/pr3/test.h5"
 
-#num_classes = 5
-num_classes = 1
+num_classes = 5
+#num_classes = 1
 
 classes = [0,1,2,3,4]
 
@@ -43,7 +43,7 @@ openfile = h5py.File(fname_train)
 lab = openfile["train/block1_values"]
 labels = np.zeros(lab.shape, dtype=np.uint8)
 lab.read_direct(labels)
-#labels = label_binarize(labels, classes)
+labels = label_binarize(labels, classes)
 
 feat = openfile["train/block0_values"]
 features = np.zeros(feat.shape, dtype=np.float32)
@@ -309,8 +309,8 @@ for lr_rte in lr_rtes:
 
         mdl.add(Activation("softmax"))
 
-        mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
-        #mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
+        #mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
+        mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
 
         logging.info("compiled model {0}".format(mdl_cfg["name"]))
 

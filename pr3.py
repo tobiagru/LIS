@@ -27,6 +27,7 @@ lr_dc = float(sys.argv[2])
 nr = int(sys.argv[3])
 p = float(sys.argv[4])
 n_lay = int(sys.argv[5])
+n_epo = int(sys.argv[6])
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -180,7 +181,7 @@ for type in ["MLP",]:
 ###########################################
 for lr_rte in lr_rtes:
     #nb_epoch = int(-20 * math.log(lr_rte, 7))
-    nb_epoch = 40
+    nb_epoch = n_epo
     print("lr_rate: {0} -- nb_epochs; {1}".format(lr_rte,nb_epoch))
 
     optimizer = SGD(lr=lr_rte,momentum=momentum,decay = lr_decay,nesterov = nestrove)

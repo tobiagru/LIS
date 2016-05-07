@@ -93,9 +93,9 @@ def objective(self, y_true, y_pred):
 
 batch_size = 120
 
-lr_rtes = [0.01, 0.3, 0.2,]
+lr_rtes = [0.01, 0.001]
 momentum = 0.9
-lr_decay = 0.0001
+lr_decay = 0.00001
 nestrove = False
 nb_neurons = {"MLP":[800],
                 "LSTM":[100,200,400,800],}

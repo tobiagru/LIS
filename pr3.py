@@ -93,7 +93,7 @@ def objective(self, y_true, y_pred):
 
 batch_size = 120
 
-lr_rtes = [0.1, 0.2]
+lr_rtes = [0.2, 0.05]
 momentum = 0.9
 lr_decay = 0.00001
 nestrove = False

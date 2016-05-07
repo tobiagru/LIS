@@ -151,7 +151,7 @@ for type in ["MLP",]:
                     {
                     "layer": "Dense",
                     #Dense
-                    "output_dim": nb_neuron,
+                    "output_dim": int(nb_neuron*2),
                     #Dense & Conv
                     "activation": activation,
                     "input_dim": 100

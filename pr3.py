@@ -99,6 +99,8 @@ def objective(self, y_true, y_pred):
 
 batch_size = 120
 
+init = "uniform"
+
 lr_rtes = [lr,]
 momentum = 0.9
 lr_decay = lr_dc
@@ -198,7 +200,7 @@ for lr_rte in lr_rtes:
             if start is True:
                 if opts["layer"] == "Dense":
                     mdl.add(Dense(output_dim=opts["output_dim"],
-                                init='normal',
+                                init=init,
                                 input_dim=opts["input_dim"],
                                 activation= opts["activation"],
                                 #W_regularizer=l2(0.001),
@@ -213,7 +215,7 @@ for lr_rte in lr_rtes:
                                         dim_ordering='th',
                                         subsample=[1,opts["subsample_length"]],
                                         activation= opts["activation"],
-                                        init='normal',
+                                        init=init,
                                         border_mode='valid',
                                         #W_regularizer=l2(0.001),
                                         #b_regularizer=l2(0.001)
@@ -221,13 +223,13 @@ for lr_rte in lr_rtes:
                 elif opts["layer"] == "Embedding":
                     mdl.add(Embedding(
                         output_dim=opts["output_dim"],
-                        init='normal',
+                        init=init,
                         input_dim=opts["input_dim"],
                         #W_regularizer=l2(0.001)
                     ))
                 elif opts["layer"] == "LSTM":
                     mdl.add(LSTM(output_dim=opts["output_dim"],
-                                    init='normal',
+                                    init=init,
                                     input_dim=opts["input_dim"],
                                     activation= opts["activation"],
                                     inner_activation = opts["inner_activation"],
@@ -240,7 +242,7 @@ for lr_rte in lr_rtes:
             else:
                 if opts["layer"] == "Dense":
                     mdl.add(Dense(output_dim=opts["output_dim"],
-                                    init='normal',
+                                    init=init,
                                     activation= opts["activation"],
                                     #W_regularizer=l2(0.001),
                                     #b_regularizer=l2(0.001)
@@ -262,7 +264,7 @@ for lr_rte in lr_rtes:
                                             subsample=[1,opts["subsample_length"]],
                                             dim_ordering='th',
                                             activation= opts["activation"],
-                                            init='normal',
+                                            init=init,
                                             border_mode='valid',
                                             #W_regularizer=l2(0.001),
                                             #b_regularizer=l2(0.001)
@@ -274,7 +276,7 @@ for lr_rte in lr_rtes:
                     mdl.add(Flatten())
                 elif opts["layer"] == "LSTM":
                     mdl.add(LSTM(output_dim=opts["output_dim"],
-                                    init='normal',
+                                    init=init,
                                     activation= opts["activation"],
                                     inner_activation = opts["inner_activation"],
                                     #W_regularizer=l2(0.001),

@@ -180,6 +180,30 @@ for type in ["MLP",]:
                     {
                     "layer": "Dense",
                     #Dense
+                    "output_dim": nb_neuron,
+                    #Dense & Conv
+                    "activation": activation,
+                    },
+                    #{
+                    #"layer": "DropOut",
+                    ##Dropout
+                    #"p": 0.4,
+                    #},
+                    {
+                    "layer": "Dense",
+                    #Dense
+                    "output_dim": nb_neuron,
+                    #Dense & Conv
+                    "activation": activation,
+                    },
+                    #{
+                    #"layer": "DropOut",
+                    ##Dropout
+                    #"p": 0.4,
+                    #},
+                    {
+                    "layer": "Dense",
+                    #Dense
                     "output_dim": num_classes,
                     #"output_dim": 1,
                     #Dense & Conv

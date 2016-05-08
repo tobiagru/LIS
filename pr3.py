@@ -152,24 +152,36 @@ for type in ["MLP",]:
                     {
                     "layer": "Dense",
                     #Dense
-                    "output_dim": nb_neuron,
+                    "output_dim": int(nb_neuron*2),
                     #Dense & Conv
-                    "activation": activation,
+                    #"activation": activation,
+                    "activation": "linear",
                     "input_dim": 100
+                    },
+                    {
+                    "layer": "Leaky",
                     },
                     {
                     "layer": "DropOut",
                     #Dropout
                     "p": 0.25,
                     },
-                    #{
-                    #"layer": "Dense",
-                    ##Dense
-                    #"output_dim": int(nb_neuron*2),
-                    ##Dense & Conv
-                    #"activation": activation,
-                    #"input_dim": 100
-                    #}
+                    {
+                    "layer": "Dense",
+                    #Dense
+                    "output_dim": nb_neuron,
+                    #Dense & Conv
+                    "activation": activation,
+                    "input_dim": 100
+                    },
+                    {
+                    "layer": "Leaky",
+                    },
+                    {
+                    "layer": "DropOut",
+                    #Dropout
+                    "p": 0.25,
+                    },
                 ]
 
                 optsMLP.append({
@@ -302,12 +314,12 @@ for lr_rte in lr_rtes:
         logging.info("compiled model {0}".format(mdl_cfg["name"]))
 
         mdl.fit(x=features,
-                  y=labels,
-                  nb_epoch=nb_epoch,
-                  batch_size=batch_size,
-                  shuffle=True,
-                  verbose=1,
-                       validation_split = 0.12,
+                y=labels,
+                nb_epoch=nb_epoch,
+                batch_size=batch_size,
+                shuffle=True,
+                verbose=1,
+                validation_split = 0.12,
                 callbacks = [earlystopping,]
                 )
         logging.info("fit model {0}".format(mdl_cfg["name"]))

@@ -79,16 +79,16 @@ i_test.read_direct(ids_test)
 logging.info("Closing dataset '{0}'".format(fname_test))
 openfile.close()
 
-features_train, features_valid,\
-    labels_train, labels_valid,\
-    ids_train, ids_valid = train_test_split(
-    features, labels, ids,
-    test_size=0.15 , random_state=17)
+#features_train, features_valid,\
+#    labels_train, labels_valid,\
+#    ids_train, ids_valid = train_test_split(
+#    features, labels, ids,
+#    test_size=0.15 , random_state=17)
 
-print("features_train shape: {0}".format(features_train.shape))
-print("labels_train shape: {0}".format(labels_train.shape))
-print("features_valid shape: {0}".format(features_valid.shape))
-print("labels_valid shape: {0}".format(labels_valid.shape))
+#print("features_train shape: {0}".format(features_train.shape))
+#print("labels_train shape: {0}".format(labels_train.shape))
+#print("features_valid shape: {0}".format(features_valid.shape))
+#print("labels_valid shape: {0}".format(labels_valid.shape))
 print("features_test shape: {0}".format(features_test.shape))
 
 features = None
@@ -296,17 +296,20 @@ for lr_rte in lr_rtes:
 
         earlystopping = EarlyStopping(monitor='loss', patience=3, verbose=0, mode='auto')
 
-        mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"], callbacks = [earlystopping,])
+        mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
         #mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
 
         logging.info("compiled model {0}".format(mdl_cfg["name"]))
 
-        mdl.fit(x=features_train,
-                  y=labels_train,
+        mdl.fit(x=features,
+                  y=labels,
                   nb_epoch=nb_epoch,
                   batch_size=batch_size,
                   shuffle=True,
-                  verbose=1)
+                  verbose=1,
+                       validation_split = 0.12,
+                callbacks = [earlystopping,]
+                )
         logging.info("fit model {0}".format(mdl_cfg["name"]))
 
         #mdl.load_weights(filepath="/home/tg/Projects/LIS/weights_net2")
@@ -317,8 +320,9 @@ for lr_rte in lr_rtes:
         mdl.save_weights("/home/ubuntu/LIS/Data/pr3/weights_" + mdl_cfg["name"] + "_{0}.h5".format(time_now) , overwrite=False)
         logging.info("save weights as {0}".format("weights_" + mdl_cfg["name"] + "_{0}.h5".format(time_now)))
 
-        score = mdl.evaluate(features_valid, labels_valid, batch_size= 32, verbose = 1)
-        logging.info("test model {0} scored {1}".format(mdl_cfg["name"],score))
+        score = mdl.train_history_["val_acc"][-1]
+        #score = mdl.evaluate(features_valid, labels_valid, batch_size= 32, verbose = 1)
+        #logging.info("test model {0} scored {1}".format(mdl_cfg["name"],score))
 
         labels_test = mdl.predict_classes(features_test, batch_size = 32, verbose = 1)
         # print(labels_test.shape)
@@ -330,7 +334,7 @@ for lr_rte in lr_rtes:
         #             labels_test_tmp[it] = n
         # labels_test = labels_test_tmp
         # print(labels_test.shape)
-        scores.append(mdl_cfg["name"] + "_{0}_{1} -- score: {2}".format(lr_rte,time_now,score[1]))
+        scores.append(mdl_cfg["name"] + "_{0}_{1} -- score: {2}".format(lr_rte,time_now,score))
         lib_IO.write_Y("/home/ubuntu/LIS/Data/pr3/_{0}_".format(time_now) + mdl_cfg["name"] + "_{0}.csv".format(lr_rte), Y_pred=labels_test, Ids=ids_test)
         logging.info("/home/ubuntu/LIS/Data/pr3/_{0}_".format(time_now) + mdl_cfg["name"] + "_{0}.csv".format(lr_rte))
 print(scores)

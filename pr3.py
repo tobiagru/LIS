@@ -320,7 +320,7 @@ for lr_rte in lr_rtes:
                 shuffle=True,
                 verbose=1,
                 validation_split = 0.12,
-                callbacks = earlystopping
+                callbacks = [earlystopping,]
                 )
         logging.info("fit model {0}".format(mdl_cfg["name"]))
 

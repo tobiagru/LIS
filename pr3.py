@@ -18,6 +18,7 @@ from keras.layers.recurrent import LSTM
 from keras.layers.embeddings import Embedding
 from keras.layers.advanced_activations import LeakyReLU
 from keras.regularizers import l2
+from keras.callbacks import EarlyStopping
 #from keras.engine.training import batch_shuffle
 
 from keras.optimizers import SGD
@@ -186,7 +187,7 @@ for type in ["MLP",]:
 ###########################################
 for lr_rte in lr_rtes:
     #nb_epoch = int(-20 * math.log(lr_rte, 7))
-    nb_epoch = 40
+    nb_epoch = 50
     print("lr_rate: {0} -- nb_epochs; {1}".format(lr_rte,nb_epoch))
 
     optimizer = SGD(lr=lr_rte,momentum=momentum,decay = lr_decay,nesterov = nestrove)
@@ -293,7 +294,9 @@ for lr_rte in lr_rtes:
 
         #mdl.add(Activation("softmax"))
 
-        mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
+        earlystopping = EarlyStopping(monitor='loss', patience=3, verbose=0, mode='auto')
+
+        mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"], callbacks = [earlystopping,])
         #mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
 
         logging.info("compiled model {0}".format(mdl_cfg["name"]))

@@ -91,8 +91,8 @@ openfile.close()
 #print("labels_valid shape: {0}".format(labels_valid.shape))
 print("features_test shape: {0}".format(features_test.shape))
 
-features = None
-labels = None
+#features = None
+#labels = None
 
 ###################################
 

@@ -306,7 +306,7 @@ for lr_rte in lr_rtes:
 
         #mdl.add(Activation("softmax"))
 
-        earlystopping = EarlyStopping(monitor='loss', patience=3, verbose=0, mode='auto')
+        earlystopping = EarlyStopping(monitor='val_loss', patience=2, verbose=0, mode='auto')
 
         mdl.compile(loss="mean_squared_error", optimizer=optimizer, metrics=["accuracy"])
         #mdl.compile(loss="categorical_crossentropy", optimizer=optimizer, metrics=["accuracy"])
@@ -320,7 +320,7 @@ for lr_rte in lr_rtes:
                 shuffle=True,
                 verbose=1,
                 validation_split = 0.12,
-                callbacks = [earlystopping,]
+                callbacks = earlystopping
                 )
         logging.info("fit model {0}".format(mdl_cfg["name"]))
 

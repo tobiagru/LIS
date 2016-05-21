@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../Deep-3D-Obj-Recognition" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../Deep-3D-Obj-Recognition" vcs="Git" />
   </component>
 </project>

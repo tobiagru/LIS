@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Deep-3D-Obj-Recognition/.idea/Deep-3D-Obj-Recognition.iml" filepath="$PROJECT_DIR$/../Deep-3D-Obj-Recognition/.idea/Deep-3D-Obj-Recognition.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/LIS.iml" filepath="$PROJECT_DIR$/.idea/LIS.iml" />
     </modules>
   </component>

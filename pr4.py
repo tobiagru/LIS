@@ -57,6 +57,8 @@ param_grid = list(ParameterGrid(params))
 
 names = ["propagation", "spreading"]
 
+logging.info("start with training ")
+
 for param in param_grid:
     for name in names:
         if param["kernel"] == 'rbf':
@@ -86,7 +88,6 @@ for param in param_grid:
         date_time = '{0:02d}_{1:02d}_{2:02d}_{3:02d}_{4:02d}'.format((now.year%2000),
                                                                      now.month, now.day,
                                                                      now.hour, now.minute)
-        logging.info("start with {0}".format(name))
 
         clf.fit(X_train, y_train)
         y_pred = clf.predict(X_valid)

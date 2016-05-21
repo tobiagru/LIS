@@ -35,15 +35,15 @@ y_train[:9000] = train_labeled._values[:, 0]
 param_grid = [
              {
                  "kernel": ['rbf',],
-                 "gamma": np.logspace(0.00001,100, 10),
-                 "alpha": np.logspace(0.00001,100, 10),
-                 "max_iter": [20,40],
+                 "gamma": np.logspace(0.00001,100, 8),
+                 "alpha": np.logspace(0.00001,100, 8),
+                 "max_iter": [20,],
              },
              {
                  "kernel": ['knn',],
                  "n_neighbors": range(1,20,2),
-                 "alpha": np.logspace(0.00001,100, 10),
-                 "max_iter": [10,20,30,40],
+                 "alpha": np.logspace(0.00001,100, 8),
+                 "max_iter": [20,],
              },
              ]
 

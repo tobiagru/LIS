@@ -9,6 +9,7 @@ import sys
 import logging
 
 logging.basicConfig(stream=sys.stdout,level=logging.DEBUG)
+logging.info("start pr4")
 
 #load stuff
 train_labeled = pd.read_hdf("Data/pr4/train_labeled.h5", "train")

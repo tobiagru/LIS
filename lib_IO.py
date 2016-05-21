@@ -3,6 +3,9 @@ import pandas as pd
 import h5py
 import sys
 import traceback
+import logging
+
+logging.basicConfig(stream=sys.stdout,level=logging.DEBUG)
 
 
 # import/export functions --------------------------------------------------------------------
@@ -86,12 +89,8 @@ def write_Y(fname, Y_pred, X_test = 0, Ids = 0):
                        fmt=['%d', '%d'],delimiter=',',header='Id,y',comments='')
 
 
-def log_best_param_score(fname, date_time, clf_name, score, best_param):
-    f = open(fname, 'a+')
-    f.write('{0} - {1} - score: {2:.4f} - param: {3}\n'.format(date_time,clf_name,score,best_param))
-    f.close()
+def log_best_param_score( date_time, clf_name, score, best_param):
+    logging.info('{0} - {1} - score: {2:.4f} - param: {3}\n'.format(date_time,clf_name,score,best_param))
 
-def log_score(fname, date_time, clf_name, score):
-    f = open(fname, 'a+')
-    f.write('{0} - {1} - score: {2:.4f}\n'.format(date_time,clf_name,score))
-    f.close()
+def log_score(date_time, clf_name, score):
+    logging.info('{0} - {1} - score: {2:.4f}\n'.format(date_time,clf_name,score))

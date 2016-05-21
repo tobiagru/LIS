@@ -34,17 +34,17 @@ y_train[:9000] = train_labeled._values[:, 0]
 #paramgrid
 param_grid = [
              {
-                 "kernel": ['knn',],
-                 "n_neighbors": range(1,20),
-                 "alpha": np.logspace(0.00001,100, 20),
-                 "max_iter": [10,20,30,40],
+                 "kernel": ['rbf',],
+                 "gamma": np.logspace(0.00001,100, 10),
+                 "alpha": np.logspace(0.00001,100, 10),
+                 "max_iter": [20,40],
              },
              {
-                 "kernel": ['rbf',],
-                 "gamma": np.logspace(0.00001,100, 20),
-                 "alpha": np.logspace(0.00001,100, 20),
+                 "kernel": ['knn',],
+                 "n_neighbors": range(1,20,2),
+                 "alpha": np.logspace(0.00001,100, 10),
                  "max_iter": [10,20,30,40],
-             }
+             },
              ]
 
 names = ["propagation", "spreading"]

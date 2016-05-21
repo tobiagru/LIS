@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="63fca15d-510f-4bbf-8de1-eab990480b10" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pr4.py" afterPath="$PROJECT_DIR$/pr4.py" />
     </list>
     <ignored path="LIS.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,8 +27,8 @@
       <file leaf-file-name="pr4.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pr4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.15158372">
-              <caret line="61" column="24" selection-start-line="61" selection-start-column="24" selection-end-line="61" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.25339368">
+              <caret line="22" column="49" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
               <folding>
                 <element signature="e#17#35#0" expanded="true" />
               </folding>
@@ -646,7 +647,19 @@
       <option name="project" value="LOCAL" />
       <updated>1463874776214</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="...">
+      <created>1463874827135</created>
+      <option name="number" value="00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1463874827135</updated>
+    </task>
+    <task id="LOCAL-00048" summary="...">
+      <created>1463874929453</created>
+      <option name="number" value="00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1463874929453</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1095,8 +1108,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pr4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15158372">
-          <caret line="61" column="24" selection-start-line="61" selection-start-column="24" selection-end-line="61" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.25339368">
+          <caret line="22" column="49" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
           <folding>
             <element signature="e#17#35#0" expanded="true" />
           </folding>

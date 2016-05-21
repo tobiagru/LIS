@@ -20,7 +20,7 @@ test = pd.read_hdf("Data/pr4/test.h5", "test")
 
 train, valid = train_test_split(train_labeled._values, test_size = 0.14, random_state = 17)
 
-X_train = np.zeros((21000 + train.shape[0]),128)
+X_train = np.zeros(((21000 + train.shape[0]),128))
 X_train[:train.shape[0]] = train[:, 1:129]
 X_train[train.shape[0]:] = train_unlabeled._values[:, 0:128]
 

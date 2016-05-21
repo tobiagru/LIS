@@ -64,7 +64,7 @@ for name, clf in zip(names,clfs):
         #ovr_clf = OneVsRestClassifier(clf)
 
         #Gridsearch
-        grid_search = GridSearchCV(clf, param, scoring='accuracy',cv=10, n_jobs=1, verbose=1)
+        grid_search = GridSearchCV(clf, param, scoring='accuracy',cv=10, n_jobs=-1, verbose=1)
         grid_search.fit(X_train, y_train)
         clf_tmp = grid_search.best_estimator_
         score = grid_search.best_score_

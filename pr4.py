@@ -39,15 +39,15 @@ y_valid = valid[:,0]
 
 #paramgrid
 params = [
-             {
-                 "kernel": ['rbf',],
-                 "gamma": [0.01, 0.1, 1.0, 10.0],
-                 "alpha": [1, 0.9],
-                 "max_iter": [20,],
-             },
+             # {
+             #     "kernel": ['rbf',],
+             #     "gamma": [0.01, 0.1, 1.0, 10.0],
+             #     "alpha": [1, 0.9],
+             #     "max_iter": [20,],
+             # },
              {
                  "kernel": ['knn',],
-                 "n_neighbors": [1,3,5,7,9,11,15,20],
+                 "n_neighbors": [9,11,],
                  "alpha": [1, 0.9],
                  "max_iter": [20,],
              },

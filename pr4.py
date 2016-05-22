@@ -66,12 +66,12 @@ for grid in params:
             if param["kernel"] == 'rbf':
                 if name == "propagation":
                     clf = LabelPropagation(kernel=param["kernel"],
-                                           gamma=["gamma"],
+                                           gamma=param["gamma"],
                                            alpha=param["alpha"],
                                            max_iter=param["max_iter"])
                 else:
                     clf = LabelSpreading(kernel=param["kernel"],
-                                           gamma=["gamma"],
+                                           gamma=param["gamma"],
                                            alpha=param["alpha"],
                                            max_iter=param["max_iter"])
             else:

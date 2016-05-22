@@ -4,11 +4,14 @@ from sklearn.semi_supervised import LabelPropagation, LabelSpreading
 from sklearn.grid_search import GridSearchCV, ParameterGrid
 from sklearn.cross_validation import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.multiclass import OneVsOneClassifier, OneVsRestClassifier
+from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import lib_IO
 import datetime
 import sys
 import logging
+import time
 
 logging.basicConfig(stream=sys.stdout,level=logging.DEBUG)
 logging.info("start pr4")
@@ -29,6 +32,11 @@ y_train[:train.shape[0]] = train[:, 0]
 
 X_valid = valid[:,1:129]
 y_valid = valid[:,0]
+
+stdscl = StandardScaler()
+X_train = stdscl.fit_transform(X_train)
+X_valid = stdscl.transform(X_valid)
+
 #k-means
 #PCA
 #bayes decision theory
@@ -39,23 +47,26 @@ y_valid = valid[:,0]
 
 #paramgrid
 params = [
-             # {
-             #     "kernel": ['rbf',],
-             #     "gamma": [0.01, 0.1, 1.0, 10.0],
-             #     "alpha": [1, 0.9],
-             #     "max_iter": [20,],
-             # },
              {
-                 "kernel": ['knn',],
-                 "n_neighbors": [9,11,],
+                 "kernel": ['rbf',],
+                 "gamma": [0.01, 0.1, 1.0, 10],
                  "alpha": [1, 0.9],
                  "max_iter": [20,],
              },
+             # {
+             #     "kernel": ['knn',],
+             #     "n_neighbors": [3,5,7,15],
+             #     "alpha": [1],
+             #     "max_iter": [20,],
+             # },
              ]
 
 
 
-names = ["propagation", "spreading"]
+names = [
+        #"propagation",
+        "spreading",
+        ]
 
 logging.info("start with training ")
 
@@ -91,13 +102,16 @@ for grid in params:
                                                                          now.month, now.day,
                                                                          now.hour, now.minute)
 
+            #classification Type
+            ovo_clf = OneVsOneClassifier(clf)
+            #clf = OneVsRestClassifier(clf)
+
             clf.fit(X_train, y_train)
             y_pred = clf.predict(X_valid)
+            print("min:{0}  max:{0}".format(y_pred.min(),y_pred.max()))
             score = accuracy_score(y_valid, y_pred, True)
 
-            #classification Type
-            #ovo_clf = OneVsOneClassifier(clf)
-            #ovr_clf = OneVsRestClassifier(clf)
+
 
             #Gridsearch
             #grid_search = GridSearchCV(clf, param, scoring='accuracy',cv=10, n_jobs=-1, verbose=1)
@@ -108,3 +122,5 @@ for grid in params:
             #best_param = grid_search.best_params_
 
             lib_IO.log_best_param_score(date_time,name,score,param)
+            clf = None
+            time.sleep(30)

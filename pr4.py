@@ -53,56 +53,58 @@ params = [
              },
              ]
 
-param_grid = list(ParameterGrid(params))
+
 
 names = ["propagation", "spreading"]
 
 logging.info("start with training ")
 
-for param in param_grid:
-    for name in names:
-        if param["kernel"] == 'rbf':
-            if name == "propagation":
-                clf = LabelPropagation(kernel=param["kernel"],
-                                       gamma=["gamma"],
-                                       alpha=param["alpha"],
-                                       max_iter=param["max_iter"])
+for grid in params:
+    param_grid = list(ParameterGrid(grid))
+    for param in param_grid:
+        for name in names:
+            if param["kernel"] == 'rbf':
+                if name == "propagation":
+                    clf = LabelPropagation(kernel=param["kernel"],
+                                           gamma=["gamma"],
+                                           alpha=param["alpha"],
+                                           max_iter=param["max_iter"])
+                else:
+                    clf = LabelSpreading(kernel=param["kernel"],
+                                           gamma=["gamma"],
+                                           alpha=param["alpha"],
+                                           max_iter=param["max_iter"])
             else:
-                clf = LabelSpreading(kernel=param["kernel"],
-                                       gamma=["gamma"],
-                                       alpha=param["alpha"],
-                                       max_iter=param["max_iter"])
-        else:
-            if name == "propagation":
-                clf = LabelPropagation(kernel=param["kernel"],
-                                       n_neighbors=param["n_neighbors"],
-                                       alpha=param["alpha"],
-                                       max_iter=param["max_iter"])
-            else:
-                clf = LabelSpreading(kernel=param["kernel"],
-                                       n_neighbors=param["n_neighbors"],
-                                       alpha=param["alpha"],
-                                       max_iter=param["max_iter"])
+                if name == "propagation":
+                    clf = LabelPropagation(kernel=param["kernel"],
+                                           n_neighbors=param["n_neighbors"],
+                                           alpha=param["alpha"],
+                                           max_iter=param["max_iter"])
+                else:
+                    clf = LabelSpreading(kernel=param["kernel"],
+                                           n_neighbors=param["n_neighbors"],
+                                           alpha=param["alpha"],
+                                           max_iter=param["max_iter"])
 
-        now = datetime.datetime.now()
-        date_time = '{0:02d}_{1:02d}_{2:02d}_{3:02d}_{4:02d}'.format((now.year%2000),
-                                                                     now.month, now.day,
-                                                                     now.hour, now.minute)
+            now = datetime.datetime.now()
+            date_time = '{0:02d}_{1:02d}_{2:02d}_{3:02d}_{4:02d}'.format((now.year%2000),
+                                                                         now.month, now.day,
+                                                                         now.hour, now.minute)
 
-        clf.fit(X_train, y_train)
-        y_pred = clf.predict(X_valid)
-        score = accuracy_score(y_valid, y_pred, False)
+            clf.fit(X_train, y_train)
+            y_pred = clf.predict(X_valid)
+            score = accuracy_score(y_valid, y_pred, False)
 
-        #classification Type
-        #ovo_clf = OneVsOneClassifier(clf)
-        #ovr_clf = OneVsRestClassifier(clf)
+            #classification Type
+            #ovo_clf = OneVsOneClassifier(clf)
+            #ovr_clf = OneVsRestClassifier(clf)
 
-        #Gridsearch
-        #grid_search = GridSearchCV(clf, param, scoring='accuracy',cv=10, n_jobs=-1, verbose=1)
-        #grid_search.fit(X_train, y_train)
+            #Gridsearch
+            #grid_search = GridSearchCV(clf, param, scoring='accuracy',cv=10, n_jobs=-1, verbose=1)
+            #grid_search.fit(X_train, y_train)
 
-        #clf_tmp = grid_search.best_estimator_
-        #score = grid_search.best_score_
-        #best_param = grid_search.best_params_
+            #clf_tmp = grid_search.best_estimator_
+            #score = grid_search.best_score_
+            #best_param = grid_search.best_params_
 
-        lib_IO.log_best_param_score(datetime,name,score,param)
+            lib_IO.log_best_param_score(datetime,name,score,param)

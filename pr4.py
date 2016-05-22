@@ -41,7 +41,7 @@ y_valid = valid[:,0]
 params = [
              {
                  "kernel": ['rbf',],
-                 "gamma": [0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0],
+                 "gamma": [0.01, 0.1, 1.0, 10.0],
                  "alpha": [1, 0.9],
                  "max_iter": [20,],
              },
@@ -107,4 +107,4 @@ for grid in params:
             #score = grid_search.best_score_
             #best_param = grid_search.best_params_
 
-            lib_IO.log_best_param_score(datetime,name,score,param)
+            lib_IO.log_best_param_score(date_time,name,score,param)

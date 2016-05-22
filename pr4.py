@@ -41,14 +41,14 @@ y_valid = valid[:,0]
 params = [
              {
                  "kernel": ['rbf',],
-                 "gamma": np.logspace(0.00001,100, 8),
-                 "alpha": np.logspace(0.00001,100, 8),
+                 "gamma": [0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0],
+                 "alpha": [0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0],
                  "max_iter": [20,],
              },
              {
                  "kernel": ['knn',],
-                 "n_neighbors": range(1,20,2),
-                 "alpha": np.logspace(0.00001,100, 8),
+                 "n_neighbors": [1,3,5,7,9,11,15,20],
+                 "alpha": [0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0],
                  "max_iter": [20,],
              },
              ]

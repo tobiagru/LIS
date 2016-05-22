@@ -42,13 +42,13 @@ params = [
              {
                  "kernel": ['rbf',],
                  "gamma": [0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0],
-                 "alpha": [0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0],
+                 "alpha": [1, 0.9],
                  "max_iter": [20,],
              },
              {
                  "kernel": ['knn',],
                  "n_neighbors": [1,3,5,7,9,11,15,20],
-                 "alpha": [0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0],
+                 "alpha": [1, 0.9],
                  "max_iter": [20,],
              },
              ]
@@ -93,7 +93,7 @@ for grid in params:
 
             clf.fit(X_train, y_train)
             y_pred = clf.predict(X_valid)
-            score = accuracy_score(y_valid, y_pred, False)
+            score = accuracy_score(y_valid, y_pred, True)
 
             #classification Type
             #ovo_clf = OneVsOneClassifier(clf)

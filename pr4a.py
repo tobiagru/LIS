@@ -158,7 +158,7 @@ for name, clf, param in zip(names, classifiers, param_grid):
         if name is "Naive_Bayes" or name is "Linear_Discriminant_Analysis" or name is "Quadratic_Discriminant_Analysis":
             #if no gridsearch neccessary just do cross validation
             try:
-                score = cross_val_score(clf, X_train, y_train, scoring='accuracy',cv=10,n_jobs=2)
+                score = cross_val_score(clf, X_train, y_train, scoring='accuracy',cv=10,n_jobs=-2)
             except:
                 print('error - Problem while doing cross validation with {0}'.format(name))
                 traceback.print_exc(file=sys.stdout)

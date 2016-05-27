@@ -85,8 +85,8 @@ test.close()
 params = [
              {
                  "kernel": ['rbf',],
-                 "gamma": np.logspace(-4,10,10),
-                 "alpha": [1, 0.8],
+                 "gamma": np.logspace(-3,2,6),
+                 "alpha": [1,],
              },
              # {
              #     "kernel": ['knn',],
@@ -109,22 +109,18 @@ for grid in params:
             if param["kernel"] == 'rbf':
                 if name == "propagation":
                     clf = LabelPropagation(kernel=param["kernel"],
-                                           gamma=param["gamma"],
-                                           max_iter=param["max_iter"])
+                                           gamma=param["gamma"])
                 else:
                     clf = LabelSpreading(kernel=param["kernel"],
-                                           gamma=param["gamma"],
-                                           max_iter=param["max_iter"])
+                                           gamma=param["gamma"])
                 extra_param = param["gamma"]
             else:
                 if name == "propagation":
                     clf = LabelPropagation(kernel=param["kernel"],
-                                           n_neighbors=param["n_neighbors"],
-                                           max_iter=param["max_iter"])
+                                           n_neighbors=param["n_neighbors"])
                 else:
                     clf = LabelSpreading(kernel=param["kernel"],
-                                           n_neighbors=param["n_neighbors"],
-                                           max_iter=param["max_iter"])
+                                           n_neighbors=param["n_neighbors"])
                 extra_param = param["n_neighbors"]
 
             now = datetime.datetime.now()

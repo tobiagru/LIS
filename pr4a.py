@@ -55,7 +55,8 @@ classifiers = [
 
 param_grid = [#{'n_neighbors': np.arange(3,150,15,dtype=np.int16),'leaf_size':np.arange(5,20,dtype=np.int16)},
               #{'C': np.linspace(0.05,1,20)},
-              {'estimator__C': np.logspace(-3,2,6),
+              {
+               'estimator__C': [0.1,1],#np.logspace(-3,2,6),
                'estimator__gamma': np.logspace(-3,2,6),
                #'estimator__probability': [True,False],
                #'estimator__shrinking': [True,False],

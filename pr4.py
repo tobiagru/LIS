@@ -14,7 +14,7 @@ import logging
 import time
 import h5py
 
-logging.basicConfig(filename= "pr4.log",level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout,level=logging.DEBUG)
 logging.info("start pr4")
 
 # #load stuff
@@ -46,7 +46,7 @@ logging.info("start pr4")
 # train_labeled = None
 # train_unlabeled = None
 # test = None
-path = "/home/ubuntu/LIS/Data/pr4/"
+path = "/home/tg/Projects/LIS/Data/pr4/"
 
 train_labeled = h5py.File(path + "train_labeled.h5")
 train_unlabeled = h5py.File(path + "train_unlabeled.h5")
@@ -85,8 +85,8 @@ test.close()
 params = [
              {
                  "kernel": ['rbf',],
-                 "gamma": np.logspace(-3,2,6),
-                 "alpha": [1,],
+                 "gamma": np.logspace(-4,10,10),
+                 "alpha": [1, 0.8],
              },
              # {
              #     "kernel": ['knn',],
@@ -129,14 +129,14 @@ for grid in params:
                                                                          now.hour, now.minute)
 
             #classification Type
-            #clf = OneVsOneClassifier(clf)
+            #ovo_clf = OneVsOneClassifier(clf)
             #clf = OneVsRestClassifier(clf)
 
             logging.info("start with training ")
             clf.fit(X_train, y_train)
-            y_pred = clf.predict(X_valid)
-            print("min:{0}  max:{0}".format(y_pred.min(),y_pred.max()))
-            score = accuracy_score(y_valid, y_pred, True)
+            #y_pred = clf.predict(X_valid)
+            #print("min:{0}  max:{0}".format(y_pred.min(),y_pred.max()))
+            #score = accuracy_score(y_valid, y_pred, True)
 
             print("found classes are {0}".format(clf.classes_))
 
@@ -144,6 +144,13 @@ for grid in params:
             y_test = y_test.astype(np.uint32)
 
             lib_IO.write_Y("Data/pr4/{0}_{1}_{2}_{3}".format(name,param["kernel"],extra_param,date_time),y_test,Ids=ids)
+            #Gridsearch
+            #grid_search = GridSearchCV(clf, param, scoring='accuracy',cv=10, n_jobs=-1, verbose=1)
+            #grid_search.fit(X_train, y_train)
+
+            #clf_tmp = grid_search.best_estimator_
+            #score = grid_search.best_score_
+            #best_param = grid_search.best_params_
 
             #lib_IO.log_best_param_score(date_time,name,score,param)
             clf = None

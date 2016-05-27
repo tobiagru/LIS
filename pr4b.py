@@ -81,7 +81,7 @@ for param in param_grid:
 
     clf = SVC(kernel='rbf',
                probability=True,
-               decision_function_shape='ovr',
+    #           decision_function_shape='ovr',
                C=param["C"],
                gamma=param["gamma"])
     model = CPLELearningModel(clf, predict_from_probabilities=True)

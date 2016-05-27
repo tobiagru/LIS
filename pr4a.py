@@ -177,7 +177,7 @@ for name, clf, param in zip(names, classifiers, param_grid):
         else:
             #if gridsearch necessary do it and print best solution
             try:
-                grid_search = GridSearchCV(mlt_clf, param, scoring='accuracy',cv=10, n_jobs=-1,verbose=2)
+                grid_search = GridSearchCV(mlt_clf, param, scoring='accuracy',cv=10, n_jobs=-1,verbose=1)
                 grid_search.fit(X_train, y_train)
             except:
                 logging.info('error - Problem while doing gridsearch with {0}'.format(name))

@@ -85,7 +85,7 @@ test.close()
 params = [
              {
                  "kernel": ['rbf',],
-                 "gamma": np.logspace(-4,10,10),
+                 "gamma": np.logspace(-3,2,6),
                  "alpha": [1, 0.8],
              },
              # {
@@ -129,7 +129,7 @@ for grid in params:
                                                                          now.hour, now.minute)
 
             #classification Type
-            #ovo_clf = OneVsOneClassifier(clf)
+            #clf = OneVsOneClassifier(clf)
             #clf = OneVsRestClassifier(clf)
 
             logging.info("start with training ")

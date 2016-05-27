@@ -14,7 +14,7 @@ import logging
 import time
 import h5py
 
-logging.basicConfig(file= "pr4.log",level=logging.DEBUG)
+logging.basicConfig(filename= "pr4.log",level=logging.DEBUG)
 logging.info("start pr4")
 
 # #load stuff

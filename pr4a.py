@@ -19,7 +19,7 @@ from sklearn.multiclass import OneVsOneClassifier, OneVsRestClassifier
 import h5py
 import logging
 
-logging.basicConfig(file= "pr4a.log",level=logging.DEBUG)
+logging.basicConfig(filename= "pr4a.log",level=logging.DEBUG)
 logging.info("start pr4a")
 
 names = [#"Nearest_Neighbors",

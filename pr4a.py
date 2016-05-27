@@ -57,8 +57,8 @@ classifiers = [
 param_grid = [#{'n_neighbors': np.arange(3,150,15,dtype=np.int16),'leaf_size':np.arange(5,20,dtype=np.int16)},
               #{'C': np.linspace(0.05,1,20)},
               {
-               'estimator__C': np.linspace(10,100,10),#np.logspace(-3,2,6),
-               'estimator__gamma': np.linspace(0.06,0.25,10), #np.logspace(-3,2,6),
+               'estimator__C': [18,20,22],#np.logspace(-3,2,6),
+               'estimator__gamma': [0.145,], #np.logspace(-3,2,6),
                #'estimator__probability': [True,False],
                #'estimator__shrinking': [True,False],
                #'estimator__class_weight': ['balanced', None],
@@ -223,5 +223,5 @@ for name, clf, param in zip(names, classifiers, param_grid):
             logging.info('error - Problem while predicting on test set with {0}'.format(name))
             traceback.print_exc(file=sys.stdout)
         else:
-            lib_IO.write_Y('/home/tg/Projects/LIS/Data/pr2/handin-{0}-{1}-{2:.4f}.csv'.format(name,date_time,score),
+            lib_IO.write_Y('/home/ubuntu/LIS/Data/pr2/handin-{0}-{1}-{2:.4f}.csv'.format(name,date_time,score),
                 Y_pred=y_pred, Ids= ids)

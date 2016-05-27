@@ -46,7 +46,7 @@ logging.info("start pr4")
 # train_labeled = None
 # train_unlabeled = None
 # test = None
-path = "/home/tg/Projects/LIS/Data/pr4/"
+path = "/home/ubuntu/LIS/Data/pr4/"
 
 train_labeled = h5py.File(path + "train_labeled.h5")
 train_unlabeled = h5py.File(path + "train_unlabeled.h5")

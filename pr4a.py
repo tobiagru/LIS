@@ -223,5 +223,5 @@ for name, clf, param in zip(names, classifiers, param_grid):
             logging.info('error - Problem while predicting on test set with {0}'.format(name))
             traceback.print_exc(file=sys.stdout)
         else:
-            lib_IO.write_Y('/home/tg/Projects/LIS/Data/pr2/handin-{0}-{1}-{2}.csv'.format(name,date_time,score),
+            lib_IO.write_Y('/home/tg/Projects/LIS/Data/pr2/handin-{0}-{1}-{2:.4f}.csv'.format(name,date_time,score),
                 Y_pred=y_pred, Ids= ids)

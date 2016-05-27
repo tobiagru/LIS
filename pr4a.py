@@ -57,8 +57,8 @@ classifiers = [
 param_grid = [#{'n_neighbors': np.arange(3,150,15,dtype=np.int16),'leaf_size':np.arange(5,20,dtype=np.int16)},
               #{'C': np.linspace(0.05,1,20)},
               {
-               'estimator__C': [0.5,1,5],#np.logspace(-3,2,6),
-               'estimator__gamma': [0.05, 0.1, 0.2, 0.3, 0.4, 0.5], #np.logspace(-3,2,6),
+               'estimator__C': [5,10,20],#np.logspace(-3,2,6),
+               'estimator__gamma': np.linspace(0.06,0.14,5), #np.logspace(-3,2,6),
                #'estimator__probability': [True,False],
                #'estimator__shrinking': [True,False],
                #'estimator__class_weight': ['balanced', None],
@@ -177,7 +177,7 @@ for name, clf, param in zip(names, classifiers, param_grid):
         else:
             #if gridsearch necessary do it and print best solution
             try:
-                grid_search = GridSearchCV(mlt_clf, param, scoring='accuracy',cv=10, n_jobs=-1,verbose=1)
+                grid_search = GridSearchCV(mlt_clf, param, scoring='accuracy',cv=10, n_jobs=-1,verbose=2)
                 grid_search.fit(X_train, y_train)
             except:
                 logging.info('error - Problem while doing gridsearch with {0}'.format(name))

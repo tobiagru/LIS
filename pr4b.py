@@ -81,7 +81,7 @@ for param in param_grid:
 
     clf = SVC(kernel='rbf',
                probability=True,
-    #           decision_function_shape='ovr',
+               decision_function_shape='ovo',
                C=param["C"],
                gamma=param["gamma"])
     model = CPLELearningModel(clf, predict_from_probabilities=True)
@@ -153,14 +153,14 @@ if type == "TSVM":
 elif type == "pesse":
     clf = SVC(kernel='rbf',
                            probability=True,
-                           decision_function_shape='ovr',
+                           # decision_function_shape='ovr',
                            C=best_param["C"],
                            gamma=best_param["gamma"])
     model = CPLELearningModel(clf, predict_from_probabilities=True)
 elif type == "opti":
     clf = SVC(kernel='rbf',
                            probability=True,
-                           decision_function_shape='ovr',
+                           # decision_function_shape='ovr',
                            C=best_param["C"],
                            gamma=best_param["gamma"])
     model = CPLELearningModel(clf, predict_from_probabilities=True, pessimistic = False)

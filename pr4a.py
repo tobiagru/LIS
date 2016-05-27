@@ -17,6 +17,10 @@ import datetime
 from sklearn.feature_selection import SelectFromModel
 from sklearn.multiclass import OneVsOneClassifier, OneVsRestClassifier
 import h5py
+import logging
+
+logging.basicConfig(file= "pr4a.log",level=logging.DEBUG)
+logging.info("start pr4a")
 
 names = [#"Nearest_Neighbors",
          #"Linear_SVM",
@@ -142,7 +146,7 @@ for name, clf, param in zip(names, classifiers, param_grid):
         date_time = '{0:02d}_{1:02d}_{2:02d}_{3:02d}_{4:02d}'.format((now.year%2000),
                                                                      now.month, now.day,
                                                                      now.hour, now.minute)
-        print('\ntesting classifier {0} start at {1}'.format(name,date_time))
+        logging.info('\ntesting classifier {0} start at {1}'.format(name,date_time))
 
         #normalize
         #print("-> Normalize vectors")
@@ -154,13 +158,13 @@ for name, clf, param in zip(names, classifiers, param_grid):
         #mlt_clf = OneVsRestClassifier(clf)
 
         #train all options
-        print("-> do Gridsearch")
+        logging.info("-> do Gridsearch")
         if name is "Naive_Bayes" or name is "Linear_Discriminant_Analysis" or name is "Quadratic_Discriminant_Analysis":
             #if no gridsearch neccessary just do cross validation
             try:
                 score = cross_val_score(clf, X_train, y_train, scoring='accuracy',cv=10,n_jobs=-2)
             except:
-                print('error - Problem while doing cross validation with {0}'.format(name))
+                logging.info('error - Problem while doing cross validation with {0}'.format(name))
                 traceback.print_exc(file=sys.stdout)
                 score = 0
             finally:
@@ -174,7 +178,7 @@ for name, clf, param in zip(names, classifiers, param_grid):
                 grid_search = GridSearchCV(mlt_clf, param, scoring='accuracy',cv=10, n_jobs=-1)
                 grid_search.fit(X_train, y_train)
             except:
-                print('error - Problem while doing gridsearch with {0}'.format(name))
+                logging.info('error - Problem while doing gridsearch with {0}'.format(name))
                 traceback.print_exc(file=sys.stdout)
                 clf_tmp = mlt_clf
                 score = 0
@@ -184,7 +188,7 @@ for name, clf, param in zip(names, classifiers, param_grid):
                 score = grid_search.best_score_
                 best_param = grid_search.best_params_
 
-            print('-> {0} scored {1:.4f} with param: {2}'.format(name,score,best_param))
+            logging.info('-> {0} scored {1:.4f} with param: {2}'.format(name,score,best_param))
             lib_IO.log_best_param_score(date_time,name,score,best_param)
 
         #feature select
@@ -203,19 +207,19 @@ for name, clf, param in zip(names, classifiers, param_grid):
         #print('-> number of features used after selection {0}'.format(np.shape(X_train)[1]))
 
 
-        print("-> starting with full training and prediction")
+        logging.info("-> starting with full training and prediction")
 
         try:
             clf_tmp.fit(X_train, y_train)
         except:
-            print('error - Problem while training with full training set on {0}'.format(name))
+            logging.info('error - Problem while training with full training set on {0}'.format(name))
             traceback.print_exc(file=sys.stdout)
 
         try:
             y_pred = clf_tmp.predict(X_test)
         except:
-            print('error - Problem while predicting on test set with {0}'.format(name))
+            logging.info('error - Problem while predicting on test set with {0}'.format(name))
             traceback.print_exc(file=sys.stdout)
         else:
-            lib_IO.write_Y('/home/tg/Projects/LIS/Data/pr2/handin-{0}-{1}.csv'.format(name,date_time),
+            lib_IO.write_Y('/home/tg/Projects/LIS/Data/pr2/handin-{0}-{1}-{2}.csv'.format(name,date_time,score),
                 Y_pred=y_pred, Ids= ids)

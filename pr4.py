@@ -14,7 +14,7 @@ import logging
 import time
 import h5py
 
-logging.basicConfig(stream=sys.stdout,level=logging.DEBUG)
+logging.basicConfig(file= "pr4.log",level=logging.DEBUG)
 logging.info("start pr4")
 
 # #load stuff
@@ -129,7 +129,7 @@ for grid in params:
                                                                          now.hour, now.minute)
 
             #classification Type
-            clf = OneVsOneClassifier(clf)
+            #clf = OneVsOneClassifier(clf)
             #clf = OneVsRestClassifier(clf)
 
             logging.info("start with training ")

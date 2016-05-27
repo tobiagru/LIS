@@ -78,7 +78,7 @@ def write_Y(fname, Y_pred, X_test = 0, Ids = 0):
         else:
             data = pd.DataFrame(data = Y_pred, index = X_test.index, columns = ['y'])
             f = open(fname, 'w+')
-            data.to_csv(f)
+            data.to_csv(f, header=["Id","y"])
             f.close()
     elif Ids is not 0:
         if Y_pred.shape[0] != Ids.shape[0]:

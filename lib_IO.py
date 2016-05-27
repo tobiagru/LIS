@@ -85,7 +85,8 @@ def write_Y(fname, Y_pred, X_test = 0, Ids = 0):
             print("error Ids- dimension of y matrix does not match number of expected predictions")
             print('y: {0} - expected: {1}'.format(Y_pred.shape,Ids.shape))
         else:
-            np.savetxt(fname=fname,X= np.column_stack([Ids,Y_pred]),
+            f = open(fname, 'w+')
+            np.savetxt(fname=f,X= np.column_stack([Ids,Y_pred]),
                        fmt=['%d', '%d'],delimiter=',',header='Id,y',comments='')
 
 

@@ -37,6 +37,7 @@ names = [#"Nearest_Neighbors",
          #"Quadratic_Discriminant_Analysis"
         ]
 
+
 classifiers = [
     #KNeighborsClassifier(),
     #SVC(kernel="linear", probability=True),
